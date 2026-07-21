@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dy80ycy46hi7j"]
+
+[ext_resource type="Script" uid="uid://bhe1hkemv343y" path="res://autoloads/game_manager/game_manager.gd" id="1_lycnq"]
+
+[node name="GameManager" type="Node" unique_id=671145612]
+script = ExtResource("1_lycnq")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1040294532]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="Viewport" type="SubViewport" parent="SubViewportContainer" unique_id=1800510012]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+physics_object_picking = true
+oversampling = false
+size = Vector2i(1280, 720)
+size_2d_override = Vector2i(1280, 720)
+size_2d_override_stretch = true
+render_target_update_mode = 4

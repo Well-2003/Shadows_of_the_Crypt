@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://cdp867iwhtrlu"]
+
+[ext_resource type="Script" uid="uid://csvmivdmoavgf" path="res://autoloads/overlay/overlay.gd" id="1_pgbkt"]
+[ext_resource type="Shader" uid="uid://ddpk0qq1icsuc" path="res://shader/overlay_adjustments.gdshader" id="2_3firf"]
+[ext_resource type="LabelSettings" uid="uid://brvmruld2f7b6" path="res://autoloads/overlay/overlay_label.tres" id="3_3firf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_belah"]
+shader = ExtResource("2_3firf")
+shader_parameter/gamma = 1.0
+shader_parameter/brightness = 0.0
+shader_parameter/contrast = 1.0
+
+[node name="Overlay" type="Node" unique_id=1689123387]
+script = ExtResource("1_pgbkt")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1906944054]
+layer = 999
+
+[node name="Adjustment" type="ColorRect" parent="UILayer" unique_id=129067445]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_belah")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UILayer" unique_id=604842938]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="UILayer/SubViewportContainer" unique_id=1430754713]
+transparent_bg = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+oversampling = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/SubViewportContainer/SubViewport" unique_id=39823878]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="FPSLabel" type="Label" parent="UILayer/SubViewportContainer/SubViewport/MarginContainer" unique_id=842619378]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "100 FPS"
+label_settings = ExtResource("3_3firf")
+
+[node name="VersionLabel" type="Label" parent="UILayer/SubViewportContainer/SubViewport/MarginContainer" unique_id=1609545269]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Ver.: 0.00.000-alpha"
+label_settings = ExtResource("3_3firf")
+
+[node name="OverlayColor" type="ColorRect" parent="UILayer/SubViewportContainer/SubViewport" unique_id=1652931159]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+z_index = 1000
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
