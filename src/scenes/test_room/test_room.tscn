@@ -1,0 +1,124 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" uid="uid://bneeettfpyka2" path="res://terrain/floor_tile_large.gltf" id="1_floor"]
+[ext_resource type="PackedScene" uid="uid://wvmakt5b6jiq" path="res://terrain/wall.gltf" id="2_wall"]
+
+[sub_resource type="Environment" id="Environment_env"]
+background_mode = 1
+background_color = Color(0.03, 0.03, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(12, 0.2, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_ns"]
+size = Vector3(12, 4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall_ew"]
+size = Vector3(1, 4, 12)
+
+[node name="TestRoom" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+position = Vector3(0, 6, 0)
+rotation_degrees = Vector3(-45, -45, 0)
+shadow_enabled = true
+
+[node name="PreviewCamera" type="Camera3D" parent="."]
+position = Vector3(14, 12, 14)
+rotation_degrees = Vector3(-35, 45, 0)
+current = true
+
+[node name="Floor" type="Node3D" parent="."]
+
+[node name="FloorTile_-4_-4" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(-4, 0, -4)
+
+[node name="FloorTile_0_-4" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(0, 0, -4)
+
+[node name="FloorTile_4_-4" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(4, 0, -4)
+
+[node name="FloorTile_-4_0" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(-4, 0, 0)
+
+[node name="FloorTile_0_0" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(0, 0, 0)
+
+[node name="FloorTile_4_0" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(4, 0, 0)
+
+[node name="FloorTile_-4_4" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(-4, 0, 4)
+
+[node name="FloorTile_0_4" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(0, 0, 4)
+
+[node name="FloorTile_4_4" parent="Floor" instance=ExtResource("1_floor")]
+position = Vector3(4, 0, 4)
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="WallNorth_-4" parent="Walls" instance=ExtResource("2_wall")]
+position = Vector3(-4, 0, -6)
+
+[node name="WallNorth_0" parent="Walls" instance=ExtResource("2_wall")]
+position = Vector3(0, 0, -6)
+
+[node name="WallNorth_4" parent="Walls" instance=ExtResource("2_wall")]
+position = Vector3(4, 0, -6)
+
+[node name="WallSouth_-4" parent="Walls" instance=ExtResource("2_wall")]
+position = Vector3(-4, 0, 6)
+
+[node name="WallSouth_0" parent="Walls" instance=ExtResource("2_wall")]
+position = Vector3(0, 0, 6)
+
+[node name="WallSouth_4" parent="Walls" instance=ExtResource("2_wall")]
+position = Vector3(4, 0, 6)
+
+[node name="WallEast_-4" parent="Walls" instance=ExtResource("2_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 6, 0, -4)
+
+[node name="WallEast_0" parent="Walls" instance=ExtResource("2_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 6, 0, 0)
+
+[node name="WallEast_4" parent="Walls" instance=ExtResource("2_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 6, 0, 4)
+
+[node name="WallWest_-4" parent="Walls" instance=ExtResource("2_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -6, 0, -4)
+
+[node name="WallWest_0" parent="Walls" instance=ExtResource("2_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -6, 0, 0)
+
+[node name="WallWest_4" parent="Walls" instance=ExtResource("2_wall")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -6, 0, 4)
+
+[node name="RoomCollision" type="StaticBody3D" parent="."]
+
+[node name="Floor" type="CollisionShape3D" parent="RoomCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="WallNorth" type="CollisionShape3D" parent="RoomCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
+shape = SubResource("BoxShape3D_wall_ns")
+
+[node name="WallSouth" type="CollisionShape3D" parent="RoomCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
+shape = SubResource("BoxShape3D_wall_ns")
+
+[node name="WallEast" type="CollisionShape3D" parent="RoomCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, 0)
+shape = SubResource("BoxShape3D_wall_ew")
+
+[node name="WallWest" type="CollisionShape3D" parent="RoomCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2, 0)
+shape = SubResource("BoxShape3D_wall_ew")
