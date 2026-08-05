@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_4m84d")
-id = 4
+id = 2
 profile = "The undisputed master of the arcane arts. He has the lowest vitality and is highly vulnerable to physical attacks, but compensates for his fragility with devastating magic power. Using his staff and grimoire, he can melt enemies' health before they even get close."
 max_health = 70.0
 move_speed = 5.5

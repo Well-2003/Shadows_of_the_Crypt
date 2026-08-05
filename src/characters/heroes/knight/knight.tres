@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_irecg")
+id = 1
 profile = "A robust and resilient warrior, a master of defensive combat. He has the highest starting health among the heroes and withstands heavy blows on the front line. He moves more slowly, but his sword and shield make him a true wall against the dungeon's hordes."
 max_health = 150.0
 move_speed = 4.5

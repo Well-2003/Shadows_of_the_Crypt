@@ -5,11 +5,12 @@ extends Resource
 
 ## Unique identifier for each available hero class in the game.
 enum HeroId {
-	KNIGHT,
 	BARBARIAN,
-	RANGER,
-	ROGUE,
+	KNIGHT,
 	MAGE,
+	RANGER,
+	ROGUE
+	
 }
 
 ## Represents the specific type of 3D weapon or equipment a hero can wield.

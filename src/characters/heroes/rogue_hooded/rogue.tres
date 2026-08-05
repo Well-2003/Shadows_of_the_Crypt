@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_8ismc")
-id = 3
+id = 4
 profile = "A lethal assassin who relies on extreme agility to survive. Although his low health makes him fragile in direct confrontations, he has the highest movement speed in the game. Deadly both with the one-handed crossbow and with quick, critical strikes at close range."
 max_health = 80.0
 move_speed = 7.0

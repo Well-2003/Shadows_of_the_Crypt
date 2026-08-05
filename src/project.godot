@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 Global="*uid://xlki5r5yclmg"
 Signals="*uid://bj28dd6tsam08"
 Overlay="*uid://cdp867iwhtrlu"
+GameManager="*uid://bhe1hkemv343y"
 
 [display]
 

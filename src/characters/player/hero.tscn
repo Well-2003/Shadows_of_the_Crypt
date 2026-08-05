@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://duv0oj48x5gil"]
+
+[ext_resource type="Script" uid="uid://chbj2qlcwi68c" path="res://characters/player/hero.gd" id="1_1pbeo"]
+[ext_resource type="AnimationLibrary" uid="uid://cflktyya2o334" path="res://characters/animations/combat_melee.res" id="2_1pbeo"]
+[ext_resource type="Resource" uid="uid://dkx57nmrgro2" path="res://characters/heroes/barbarian/barbarian.tres" id="2_3b2wt"]
+[ext_resource type="AnimationLibrary" uid="uid://c61hp5c2xd1p" path="res://characters/animations/combat_ranged.res" id="4_cc5f3"]
+[ext_resource type="AnimationLibrary" uid="uid://vxg1ajh18kek" path="res://characters/animations/general.res" id="5_gkelc"]
+[ext_resource type="AnimationLibrary" uid="uid://pynebh1ql65w" path="res://characters/animations/movement_basic.res" id="7_3b2wt"]
+[ext_resource type="AnimationLibrary" uid="uid://dbaiklthgy1b" path="res://characters/animations/simulation.res" id="8_cayou"]
+[ext_resource type="PackedScene" uid="uid://btgsjhfoitwnf" path="res://ui/hud/hud.tscn" id="10_3b2wt"]
+[ext_resource type="Script" uid="uid://do31urtmneaxr" path="res://characters/player/states/idle_state.gd" id="10_gkelc"]
+[ext_resource type="AnimationLibrary" uid="uid://bx30ljqlx7mlo" path="res://characters/animations/tools.res" id="10_mskpk"]
+[ext_resource type="Script" uid="uid://n4hnou4gv1dt" path="res://components/state_machine/state_machine.gd" id="10_rbtco"]
+[ext_resource type="Script" uid="uid://cb5gx0v2qwg62" path="res://characters/player/states/walk_state.gd" id="11_rbtco"]
+[ext_resource type="PackedScene" path="res://characters/player/camera/player_camera.tscn" id="12_pcam"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pch2i"]
+radius = 0.5751953
+height = 2.3065186
+
+[node name="Hero" type="CharacterBody3D" unique_id=452964916 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_1pbeo")
+hero_data = ExtResource("2_3b2wt")
+initial_state = NodePath("StateMachine/IdleState")
+
+[node name="PlayerCamera" parent="." unique_id=688650100 instance=ExtResource("12_pcam")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1724524880]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01587832, 1.1553832, 0)
+visible = false
+shape = SubResource("CapsuleShape3D_pch2i")
+
+[node name="Rig_Medium" type="Node3D" parent="." unique_id=2091149835]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Rig_Medium" unique_id=1925123695]
+root_node = NodePath("../..")
+libraries/combat_melee = ExtResource("2_1pbeo")
+libraries/combat_ranged = ExtResource("4_cc5f3")
+libraries/general = ExtResource("5_gkelc")
+libraries/movement_basic = ExtResource("7_3b2wt")
+libraries/simulation = ExtResource("8_cayou")
+libraries/tools = ExtResource("10_mskpk")
+
+[node name="Hud" parent="." unique_id=222708804 instance=ExtResource("10_3b2wt")]
+
+[node name="StateMachine" type="Node" parent="." unique_id=121810463]
+script = ExtResource("10_rbtco")
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1104539599]
+script = ExtResource("10_gkelc")
+
+[node name="WalkState" type="Node" parent="StateMachine" unique_id=138111217]
+script = ExtResource("11_rbtco")

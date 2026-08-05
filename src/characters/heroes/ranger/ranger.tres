@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_w532g")
-id = 2
+id = 3
 profile = "A specialist in survival and ranged combat. She has excellent mobility and moderate health, focusing on keeping enemies at a distance with a continuous stream of arrows. She is the ideal class for players who prefer precision, spacing control, and consistent attacks."
 max_health = 90.0
 move_speed = 6.0
