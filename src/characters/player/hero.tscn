@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://cb5gx0v2qwg62" path="res://characters/player/states/walk_state.gd" id="11_rbtco"]
 [ext_resource type="PackedScene" path="res://characters/player/camera/player_camera.tscn" id="12_pcam"]
 
+[sub_resource type="StatPool" id="StatPool_3b2wt"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pch2i"]
 radius = 0.5751953
 height = 2.3065186
@@ -22,6 +24,7 @@ height = 2.3065186
 script = ExtResource("1_1pbeo")
 hero_data = ExtResource("2_3b2wt")
 initial_state = NodePath("StateMachine/IdleState")
+health_pool = SubResource("StatPool_3b2wt")
 
 [node name="PlayerCamera" parent="." unique_id=688650100 instance=ExtResource("12_pcam")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)

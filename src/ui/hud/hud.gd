@@ -7,11 +7,7 @@ extends CanvasLayer
 @onready var xp_bar: ProgressBar = %ExperienceBar
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+## Function called by the Player to insert the data
+func set_health(current: int, max_value: int) -> void:
+	health_bar.max_value = max_value
+	health_bar.value = current

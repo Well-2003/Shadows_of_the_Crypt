@@ -19,6 +19,7 @@ const MESHES: Array[String] = [
 
 @export var hero_data: HeroClassData = null: set = _set_hero_data
 @export var initial_state: State = null
+@export var health_pool: StatPool = StatPool.new()
 @export var mouse_sensitivity: float = 0.003
 
 var skeleton: Skeleton3D = null
@@ -34,6 +35,7 @@ var camera_yaw: float = 0.0
 @onready var base: Node3D = $Rig_Medium
 @onready var animation_player: AnimationPlayer = $Rig_Medium/AnimationPlayer
 @onready var camera_pivot: PlayerCamera = $PlayerCamera
+@onready var hud: HUD = $Hud
 
 #region States
 @onready var state_machine: StateMachine = $StateMachine
@@ -52,6 +54,13 @@ func _ready() -> void:
 	add_to_group("Player")
 	state_machine.init(self, initial_state)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	health_pool.value_changed.connect(_on_health_changed)
+	hud.set_health(health_pool.get_value(), health_pool.get_max_value())
+
+
+func _on_health_changed(_old_value: int, new_value: int, _increased: bool) -> void:
+	hud.set_health(new_value, health_pool.get_max_value())
 
 
 ## Runs every physics frame: lets the StateMachine decide the movement.
@@ -80,11 +89,31 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_pivot.rotation.y = camera_yaw
 		camera_pivot.apply_pitch(-event.relative.y * mouse_sensitivity)
 
+	if event is InputEventKey and event.pressed and not event.echo:
+		match event.keycode:
+			KEY_1: health_pool.increase(10)
+			KEY_2: health_pool.decrease(10)
+			KEY_P: _print_hero_attributes()
+
+
+## Prints the selected class's attributes to the console (debug).
+func _print_hero_attributes() -> void:
+	print("Class: ", HeroClassData.HeroId.keys()[hero_data.id])
+	print("Health: ", health_pool.get_value(), "/", health_pool.get_max_value())
+	print("Move speed: ", hero_data.move_speed)
+	print("Physical damage (melee): ", hero_data.physical_damage_melee)
+	print("Physical damage (ranged): ", hero_data.physical_damage_ranged)
+	print("Magic damage: ", hero_data.magic_damage)
+
+
 ## called when a mesh is added, it removes the old one and puts in the new one matching the selected class
 func _set_hero_data(value: HeroClassData) -> void:
 	hero_data = value
 
 	if not is_node_ready(): return
+
+	health_pool.set_max_value(int(value.max_health))
+	health_pool.increase(int(value.max_health))  
 
 	var mesh_scene: PackedScene = load(MESHES[hero_data.id])
 	var mesh: Skeleton3D = mesh_scene.instantiate()
