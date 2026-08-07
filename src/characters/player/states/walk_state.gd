@@ -4,6 +4,26 @@ extends State
 ## to face the pressed direction (diagonals included).
 
 
+# Angles the model faces, in degrees, where 0° is wherever the camera is pointing.
+# Negative turns right and positive turns left, following how Godot rotates on the Y axis.
+## W, runs away from the camera, showing the character's back.
+const ANGLE_FORWARD: float = 0.0
+## W and D, runs diagonally ahead, to the right.
+const ANGLE_FORWARD_RIGHT: float = -45.0
+## W and A, runs diagonally ahead, to the left.
+const ANGLE_FORWARD_LEFT: float = 45.0
+## D, runs to the right, seen from the side.
+const ANGLE_RIGHT: float = -90.0
+## A, runs to the left, seen from the side.
+const ANGLE_LEFT: float = 90.0
+## S and D, runs diagonally back, to the right.
+const ANGLE_BACKWARD_RIGHT: float = -135.0
+## S and A, runs diagonally back, to the left.
+const ANGLE_BACKWARD_LEFT: float = 135.0
+## S, runs toward the camera, showing the character's face.
+const ANGLE_BACKWARD: float = 180.0
+
+
 ## Plays the running animation on entering this state.
 func enter() -> void:
 	(context as Hero).play_animation("movement_basic/Running_B", true)
@@ -43,21 +63,20 @@ func _turn_angle_for(input_dir: Vector2) -> float:
 	var pressing_right: bool = input_dir.x > 0.0
 	var pressing_left: bool = input_dir.x < 0.0
 
-	# 0° is the camera's forward direction. In Godot, turning right is a negative angle, and left is positive.
 	if pressing_forward and pressing_right:
-		return -45.0
+		return ANGLE_FORWARD_RIGHT
 	if pressing_forward and pressing_left:
-		return 45.0
+		return ANGLE_FORWARD_LEFT
 	if pressing_backward and pressing_right:
-		return -135.0
+		return ANGLE_BACKWARD_RIGHT
 	if pressing_backward and pressing_left:
-		return 135.0
+		return ANGLE_BACKWARD_LEFT
 	if pressing_right:
-		return -90.0
+		return ANGLE_RIGHT
 	if pressing_left:
-		return 90.0
+		return ANGLE_LEFT
 	if pressing_backward:
-		return 180.0
+		return ANGLE_BACKWARD
 
 	# Just "forward" (or no forward/backward/sideways key at all).
-	return 0.0
+	return ANGLE_FORWARD

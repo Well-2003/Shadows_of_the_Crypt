@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dh4tinjm8yeha"]
 
+[ext_resource type="Script" uid="uid://b40d0qb1itui5" path="res://scenes/test_room/test_room.gd" id="0_troom"]
 [ext_resource type="PackedScene" uid="uid://bneeettfpyka2" path="res://terrain/floor_tile_large.gltf" id="1_floor"]
 [ext_resource type="PackedScene" uid="uid://wvmakt5b6jiq" path="res://terrain/wall.gltf" id="2_wall"]
 [ext_resource type="PackedScene" uid="uid://duv0oj48x5gil" path="res://characters/player/hero.tscn" id="3_35u8j"]
@@ -21,6 +22,7 @@ size = Vector3(20, 4, 1)
 size = Vector3(1, 4, 20)
 
 [node name="TestRoom" type="Node3D" unique_id=462660987]
+script = ExtResource("0_troom")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=842484581]
 environment = SubResource("Environment_x3t7u")

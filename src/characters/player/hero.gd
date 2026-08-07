@@ -8,6 +8,12 @@ extends CharacterBody3D
 ## orbit without depending on the body's own rotation.
 
 
+## Reference to the active Hero, so any script can reach it via Hero.player.
+static var player: Hero = null
+
+## How fast the model turns to a new direction.
+const MESH_TURN_SPEED: float = 12.0
+
 ## meshes for each playable class, in the same order as hero_id
 const MESHES: Array[String] = [
 	"res://characters/heroes/barbarian/mesh.tscn",
@@ -17,9 +23,13 @@ const MESHES: Array[String] = [
 	"res://characters/heroes/rogue_hooded/mesh.tscn"
 ]
 
+## Class resource with this hero's attributes, changing it swaps the mesh.
 @export var hero_data: HeroClassData = null: set = _set_hero_data
+## State the StateMachine starts on, usually IdleState.
 @export var initial_state: State = null
+## Current and max health, filled from hero_data's max_health.
 @export var health_pool: StatPool = StatPool.new()
+## How fast the camera turns with mouse movement.
 @export var mouse_sensitivity: float = 0.003
 
 var skeleton: Skeleton3D = null
@@ -27,8 +37,6 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 ## Angle (rad, absolute in world space) of the visual model. 0 = facing -Z.
 var mesh_facing: float = 0.0
-const MESH_TURN_SPEED: float = 12.0
-
 ## Camera's horizontal turn (rad); lives outside the Hero so it can orbit the stationary character without rotating the body.
 var camera_yaw: float = 0.0
 
@@ -51,7 +59,8 @@ func _ready() -> void:
 
 	if Engine.is_editor_hint(): return
 
-	add_to_group("Player")
+	player = self
+
 	state_machine.init(self, initial_state)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
@@ -93,17 +102,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		match event.keycode:
 			KEY_1: health_pool.increase(10)
 			KEY_2: health_pool.decrease(10)
-			KEY_P: _print_hero_attributes()
-
-
-## Prints the selected class's attributes to the console (debug).
-func _print_hero_attributes() -> void:
-	print("Class: ", HeroClassData.HeroId.keys()[hero_data.id])
-	print("Health: ", health_pool.get_value(), "/", health_pool.get_max_value())
-	print("Move speed: ", hero_data.move_speed)
-	print("Physical damage (melee): ", hero_data.physical_damage_melee)
-	print("Physical damage (ranged): ", hero_data.physical_damage_ranged)
-	print("Magic damage: ", hero_data.magic_damage)
 
 
 ## called when a mesh is added, it removes the old one and puts in the new one matching the selected class

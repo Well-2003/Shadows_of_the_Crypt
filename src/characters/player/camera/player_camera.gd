@@ -2,12 +2,14 @@ class_name PlayerCamera
 extends Node3D
 ## Over-the-shoulder camera pivot that orbits the Hero via the mouse.
 ##
-## Node3D.rotation's Y (yaw) is set directly by the Hero; X (pitch)
+## Node3D.rotation's Y (yaw) is set directly by the Hero, X (pitch)
 ## is controlled by apply_pitch. The over-the-shoulder position comes from
 ## the local transform of the child Camera3D node.
 
 
+## How far down the camera can look.
 @export var pitch_min_degrees: float = -40.0
+## How far up the camera can look.
 @export var pitch_max_degrees: float = 60.0
 
 @onready var camera: Camera3D = $Camera3D

@@ -7,12 +7,12 @@ extends State
 
 
 func enter() -> void:
-	var hero := context as Hero
+	var hero: Hero = context
 	hero.play_animation("general/Idle_A", true)
 
 
 func physics_update() -> State:
-	var hero := context as Hero
+	var hero : Hero = context
 	var delta: float = get_physics_process_delta_time()
 
 	if not hero.is_on_floor():

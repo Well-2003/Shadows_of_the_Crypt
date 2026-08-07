@@ -5,28 +5,25 @@ extends Node
 ## (autoloads aren't destroyed by SceneTree.change_scene_to_file).
 
 
-## Scene loaded by start_game; fixed because there's only one game room for now.
+## Scene loaded by load_gameplay_scene; fixed because there's only one game room for now.
 const GAMEPLAY_SCENE: String = "res://scenes/test_room/test_room.tscn"
 
 var selected_hero: HeroClassData = null
+var current_scene: Node = null
 
 
-## Just stores the choice; the scene change itself happens in start_game.
+## Just stores the choice; the scene change itself happens in load_gameplay_scene.
 func select_hero(hero_data: HeroClassData) -> void:
 	selected_hero = hero_data
 
 
-## Switches to the gameplay scene and applies selected_hero once the Hero exists.
-func start_game() -> void:
+## Switches to the gameplay scene, which then calls start_game once it's ready.
+func load_gameplay_scene() -> void:
 	get_tree().change_scene_to_file(GAMEPLAY_SCENE)
 
-	# change_scene_to_file() is deferred, so wait for the Hero to join the "Player" group.
-	var player: Hero = null
-	var attempts: int = 0
-	while not player and attempts < 30:
-		await get_tree().process_frame
-		player = get_tree().get_first_node_in_group("Player")
-		attempts += 1
 
-	if player:
-		player.hero_data = selected_hero
+## Applies the chosen class. Called by the level scene, so the Hero already exists.
+func start_game() -> void:
+	if not selected_hero: return
+
+	Hero.player.hero_data = selected_hero

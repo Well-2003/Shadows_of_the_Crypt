@@ -25,4 +25,4 @@ func _ready() -> void:
 func _on_hero_selected(hero_data: HeroClassData) -> void:
 	# GameManager changes the scene, so the selection screen doesn't navigate anything itself.
 	GameManager.select_hero(hero_data)
-	GameManager.start_game()
+	GameManager.load_gameplay_scene()
