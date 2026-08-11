@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://rwh4gesw65sn"]
+
+[ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_irecg"]
+
+[resource]
+script = ExtResource("1_irecg")
+id = 1
+profile = "A robust and resilient warrior, a master of defensive combat. He has the highest starting health among the heroes and withstands heavy blows on the front line. He moves more slowly, but his sword and shield make him a true wall against the dungeon's hordes."
+max_health = 150.0
+move_speed = 4.5
+physical_damage_melee = 18.0
+main_hand_weapon = 1
+off_hand_weapon = 7
+metadata/_custom_type_script = "uid://ks4abisoxr7j"

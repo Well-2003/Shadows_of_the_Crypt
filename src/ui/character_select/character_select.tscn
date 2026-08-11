@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://y6ijgflt3ix4"]
+
+[ext_resource type="Script" uid="uid://cxqo32i0mlmmm" path="res://ui/character_select/character_select.gd" id="1_o7qwi"]
+[ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="2_x3bhl"]
+[ext_resource type="Resource" uid="uid://dkx57nmrgro2" path="res://characters/heroes/barbarian/barbarian.tres" id="3_yov7p"]
+[ext_resource type="Resource" uid="uid://rwh4gesw65sn" path="res://characters/heroes/knight/knight.tres" id="4_40405"]
+[ext_resource type="Resource" uid="uid://euw7l0mqep6y" path="res://characters/heroes/mage/mage.tres" id="5_bhxhm"]
+[ext_resource type="Resource" uid="uid://bhp4l1hmei201" path="res://characters/heroes/ranger/ranger.tres" id="6_ipm0l"]
+[ext_resource type="Resource" uid="uid://beetxiyuowt5f" path="res://characters/heroes/rogue_hooded/rogue.tres" id="7_i323y"]
+
+[node name="CharacterSelect" type="Control" unique_id=1940311938]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o7qwi")
+class_entry = Array[ExtResource("2_x3bhl")]([ExtResource("3_yov7p"), ExtResource("4_40405"), ExtResource("5_bhxhm"), ExtResource("6_ipm0l"), ExtResource("7_i323y")])
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1081945472]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0.24766117, 0.24766117, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=415734897]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=765346955]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2124001486]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Choose your class "
+horizontal_alignment = 1
+
+[node name="EntriesGrid" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=1054642579]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16

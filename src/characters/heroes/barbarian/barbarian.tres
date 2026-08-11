@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://dkx57nmrgro2"]
+
+[ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_ykmv5"]
+
+[resource]
+script = ExtResource("1_ykmv5")
+profile = "A ferocious fighter driven by pure brute force. He forgoes elaborate defenses in exchange for high health and devastating physical damage. With his heavy axe, the Barbarian has a more measured attack rhythm, built to crush enemies before they can react."
+max_health = 135.0
+move_speed = 5.2
+physical_damage_melee = 10.0
+resource_max = 80.0
+main_hand_weapon = 2
+off_hand_weapon = 7
+metadata/_custom_type_script = "uid://ks4abisoxr7j"

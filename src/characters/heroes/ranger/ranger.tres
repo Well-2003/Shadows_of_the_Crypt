@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://bhp4l1hmei201"]
+
+[ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_w532g"]
+
+[resource]
+script = ExtResource("1_w532g")
+id = 3
+profile = "A specialist in survival and ranged combat. She has excellent mobility and moderate health, focusing on keeping enemies at a distance with a continuous stream of arrows. She is the ideal class for players who prefer precision, spacing control, and consistent attacks."
+max_health = 90.0
+move_speed = 6.0
+physical_damage_melee = 10.0
+physical_damage_ranged = 20.0
+resource_max = 40.0
+resource_type = 2
+main_hand_weapon = 3
+off_hand_weapon = 6
+metadata/_custom_type_script = "uid://ks4abisoxr7j"

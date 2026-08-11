@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://btgsjhfoitwnf"]
+
+[ext_resource type="Script" uid="uid://06uclib3cpf" path="res://ui/hud/hud.gd" id="1_xmswo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilwqg"]
+bg_color = Color(0.11489672, 0.11489683, 0.11489678, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmswo"]
+bg_color = Color(0.7127973, 0, 0.17175469, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4d6w6"]
+bg_color = Color(0.11372549, 0.11372549, 0.11372549, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e0nub"]
+bg_color = Color(0, 0.34323707, 0.69632053, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Hud" type="CanvasLayer" unique_id=222708804]
+script = ExtResource("1_xmswo")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1000084520]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 15.0
+offset_right = 360.0
+offset_bottom = 36.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ilwqg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xmswo")
+value = 70.0
+show_percentage = false
+
+[node name="ExperienceBar" type="ProgressBar" parent="." unique_id=2021076193]
+unique_name_in_owner = true
+offset_left = 15.0
+offset_top = 40.0
+offset_right = 314.0
+offset_bottom = 56.0
+theme_override_styles/background = SubResource("StyleBoxFlat_4d6w6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_e0nub")
+value = 75.0
+show_percentage = false

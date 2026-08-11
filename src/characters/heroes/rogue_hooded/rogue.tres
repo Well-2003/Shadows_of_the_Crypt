@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://beetxiyuowt5f"]
+
+[ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_8ismc"]
+
+[resource]
+script = ExtResource("1_8ismc")
+id = 4
+profile = "A lethal assassin who relies on extreme agility to survive. Although his low health makes him fragile in direct confrontations, he has the highest movement speed in the game. Deadly both with the one-handed crossbow and with quick, critical strikes at close range."
+max_health = 80.0
+move_speed = 7.0
+physical_damage_melee = 22.0
+physical_damage_ranged = 12.0
+resource_max = 25.0
+resource_type = 3
+main_hand_weapon = 4
+off_hand_weapon = 6
+metadata/_custom_type_script = "uid://ks4abisoxr7j"
