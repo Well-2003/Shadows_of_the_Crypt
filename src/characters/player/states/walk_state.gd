@@ -26,12 +26,12 @@ const ANGLE_BACKWARD: float = 180.0
 
 ## Plays the running animation on entering this state.
 func enter() -> void:
-	(context as Hero).play_animation("movement_basic/Running_B", true)
+	context.play_animation("movement_basic/Running_B", true)
 
 
 ## Moves the Hero and turns the model to face the pressed direction, every physics frame.
 func physics_update() -> State:
-	var hero := context as Hero
+	var hero: Hero = context
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 
 	if input_dir == Vector2.ZERO:

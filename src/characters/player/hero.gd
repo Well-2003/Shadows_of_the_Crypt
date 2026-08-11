@@ -8,9 +8,6 @@ extends CharacterBody3D
 ## orbit without depending on the body's own rotation.
 
 
-## Reference to the active Hero, so any script can reach it via Hero.player.
-static var player: Hero = null
-
 ## How fast the model turns to a new direction.
 const MESH_TURN_SPEED: float = 12.0
 
@@ -22,6 +19,9 @@ const MESHES: Array[String] = [
 	"res://characters/heroes/ranger/mesh.tscn",
 	"res://characters/heroes/rogue_hooded/mesh.tscn"
 ]
+
+## Reference to the active Hero, so any script can reach it via Hero.player.
+static var player: Hero = null
 
 ## Class resource with this hero's attributes, changing it swaps the mesh.
 @export var hero_data: HeroClassData = null: set = _set_hero_data
@@ -35,9 +35,7 @@ const MESHES: Array[String] = [
 var skeleton: Skeleton3D = null
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-## Angle (rad, absolute in world space) of the visual model. 0 = facing -Z.
 var mesh_facing: float = 0.0
-## Camera's horizontal turn (rad); lives outside the Hero so it can orbit the stationary character without rotating the body.
 var camera_yaw: float = 0.0
 
 @onready var base: Node3D = $Rig_Medium
@@ -83,7 +81,7 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint(): return
 
-	## Esc releases the mouse (handy for debugging); clicking the window recaptures it.
+	# Esc releases the mouse (handy for debugging); clicking the window recaptures it.
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		return
@@ -93,7 +91,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		## Yaw stays only on the camera (doesn't rotate the Hero), so it orbits the stationary character.
+		# Yaw stays only on the camera (doesn't rotate the Hero), so it orbits the stationary character.
 		camera_yaw -= event.relative.x * mouse_sensitivity
 		camera_pivot.rotation.y = camera_yaw
 		camera_pivot.apply_pitch(-event.relative.y * mouse_sensitivity)

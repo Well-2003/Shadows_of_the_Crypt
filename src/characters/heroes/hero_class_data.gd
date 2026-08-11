@@ -9,7 +9,7 @@ enum HeroId {
 	BARBARIAN,
 	## Sword and shield; the highest health, and the slowest.
 	KNIGHT,
-	## Wand and spellbook; the only class with magic damage, and the lowest health.
+	## Wand and dagger; the only class with magic damage, and the lowest health.
 	MAGE,
 	## Bow; the highest ranged damage.
 	RANGER,
@@ -19,23 +19,34 @@ enum HeroId {
 
 ## Represents the specific type of 3D weapon or equipment a hero can wield.
 enum WeaponType {
+	## Empty slot, the hero carries nothing in this hand.
 	NONE,
+	## One-handed sword, carried by the Knight.
 	SWORD_1H,
+	## One-handed axe, carried by the Barbarian.
 	AXE_1H,
+	## Bow, carried by the Ranger.
 	BOW,
+	## One-handed crossbow, carried by the Rogue.
 	CROSSBOW_1H,
+	## Magic wand, carried by the Mage.
 	WAND,
+	## Short blade, the off-hand of the Mage, Ranger and Rogue.
 	DAGGER,
-	SHIELD_SQUARE,
-	SPELLBOOK,
+	## Square shield, the off-hand of the Barbarian and Knight.
+	SHIELD_SQUARE
 }
 
 ## Primary resource consumed by the hero's weapons and abilities.
 enum ResourceType {
+	## Default resource, spent by the Barbarian and Knight.
 	STAMINA,
+	## Spent on spells by the Mage.
 	MANA,
+	## Ammo for the Ranger's bow.
 	ARROWS,
-	BOLTS,
+	## Ammo for the Rogue's crossbow.
+	BOLTS
 }
 
 ## Which class this resource is; also the index Hero.MESHES uses to load the model.

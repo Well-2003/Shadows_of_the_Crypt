@@ -11,5 +11,6 @@ move_speed = 5.5
 physical_damage_melee = 6.0
 magic_damage = 28.0
 resource_type = 1
+main_hand_weapon = 5
 off_hand_weapon = 6
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

@@ -7,8 +7,7 @@ extends State
 
 
 func enter() -> void:
-	var hero: Hero = context
-	hero.play_animation("general/Idle_A", true)
+	context.play_animation("general/Idle_A", true)
 
 
 func physics_update() -> State:

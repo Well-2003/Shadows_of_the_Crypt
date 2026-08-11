@@ -6,8 +6,10 @@ extends Node
 ## chosen, hands the class to GameManager and starts the game.
 
 
+## Classes offered on screen, one button is created per entry, in this order.
 @export var class_entry: Array[HeroClassData] = []
 
+## Grid the class buttons are added to.
 @onready var entries_grid: GridContainer = $MarginContainer/VBoxContainer/EntriesGrid
 
 
@@ -22,7 +24,7 @@ func _ready() -> void:
 		entries_grid.add_child(button)
 
 
+## GameManager changes the scene, so the selection screen doesn't navigate anything itself.
 func _on_hero_selected(hero_data: HeroClassData) -> void:
-	# GameManager changes the scene, so the selection screen doesn't navigate anything itself.
 	GameManager.select_hero(hero_data)
 	GameManager.load_gameplay_scene()
