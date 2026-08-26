@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://vjlo43drvtke" path="res://characters/heroes/weapons/assets/staff.gltf" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+id = 9
+weapon_type = 6
+handedness = 1
+hand = 0
+rarity = 0
+base_damage = 35
+attack_speed = 0.7
+resource_cost = 15
+scaling = 2
+scaling_multiplier = 2.0
+world_model = ExtResource("2_model")
+grip_rotation = Vector3(0, 180, 0)
+attack_animations = Array[String](["combat_ranged/Ranged_Magic_Shoot", "combat_ranged/Ranged_Magic_Spellcasting_Long"])
+shop_price = 100

@@ -11,6 +11,11 @@ extends CharacterBody3D
 ## How fast the model turns to a new direction.
 const MESH_TURN_SPEED: float = 12.0
 
+## Skeleton bone the main hand weapon is attached to.
+const MAIN_HAND_BONE: String = "handslot.r"
+## Skeleton bone the off hand weapon or shield is attached to.
+const OFF_HAND_BONE: String = "handslot.l"
+
 ## meshes for each playable class, in the same order as hero_id
 const MESHES: Array[String] = [
 	"res://characters/heroes/barbarian/mesh.tscn",
@@ -31,6 +36,8 @@ static var player: Hero = null
 @export var health_pool: StatPool = StatPool.new()
 ## How fast the camera turns with mouse movement.
 @export var mouse_sensitivity: float = 0.003
+## Editor helper: tick this to re-attach the weapons after editing their grip values.
+@export var refresh_equipment: bool = false: set = _refresh_equipment
 
 var skeleton: Skeleton3D = null
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -122,6 +129,62 @@ func _set_hero_data(value: HeroClassData) -> void:
 	mesh.name = "Skeleton3D"
 	base.add_child(mesh)
 	skeleton = mesh
+
+	_equip_starting_weapons()
+
+
+## Re-attaches the weapons, so grip tweaks show up without running the game.
+func _refresh_equipment(_value: bool) -> void:
+	# Stays false so the checkbox works like a button instead of a setting.
+	refresh_equipment = false
+
+	if not is_node_ready() or not hero_data: return
+
+	_equip_starting_weapons()
+
+
+## Spawns the class's starting gear on the skeleton's hand bones.
+func _equip_starting_weapons() -> void:
+	# Drops the old models first, otherwise re-equipping stacks copies.
+	for child: Node in skeleton.get_children():
+		if child is BoneAttachment3D:
+			child.free()
+
+	if hero_data.starting_weapons.is_empty(): return
+
+	var primary: WeaponData = hero_data.starting_weapons[0]
+	_attach_weapon(primary)
+
+	# A two-handed weapon fills both slots, so the secondary item stays stowed.
+	if primary and primary.handedness == WeaponData.Handedness.TWO_HANDED: return
+
+	if hero_data.starting_weapons.size() < 2: return
+
+	# Only an off-hand item is worn next to the primary weapon. Anything else in
+	# slot 2 is a second weapon the player swaps to, so it waits in the hotbar
+	# instead of being held, since there is no animation for wielding both.
+	var secondary: WeaponData = hero_data.starting_weapons[1]
+	if not secondary or secondary.handedness != WeaponData.Handedness.OFF_HAND: return
+
+	_attach_weapon(secondary)
+
+
+## Attaches one weapon model to the hand bone the weapon asks for.
+func _attach_weapon(weapon: WeaponData) -> void:
+	if not weapon or not weapon.world_model: return
+
+	var slot: BoneAttachment3D = BoneAttachment3D.new()
+	skeleton.add_child(slot)
+	# bone_name only resolves after add_child, when the node can already see the skeleton.
+	slot.bone_name = OFF_HAND_BONE if weapon.hand == WeaponData.Hand.OFF else MAIN_HAND_BONE
+
+	# The grip values line the model up with the hand; each weapon is modelled
+	# around a different pivot, so they live on the weapon instead of here.
+	var model: Node3D = weapon.world_model.instantiate()
+	slot.add_child(model)
+	model.position = weapon.grip_position
+	model.rotation_degrees = weapon.grip_rotation
+	model.scale = Vector3.ONE * weapon.grip_scale
 
 
 ## Smoothly turns only the visual model (not the body/camera) to face target_angle.

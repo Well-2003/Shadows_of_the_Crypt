@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://chbj2qlcwi68c" path="res://characters/player/hero.gd" id="1_1pbeo"]
 [ext_resource type="AnimationLibrary" uid="uid://cflktyya2o334" path="res://characters/animations/combat_melee.res" id="2_1pbeo"]
-[ext_resource type="Resource" uid="uid://dkx57nmrgro2" path="res://characters/heroes/barbarian/barbarian.tres" id="2_3b2wt"]
+[ext_resource type="Resource" uid="uid://bhp4l1hmei201" path="res://characters/heroes/ranger/ranger.tres" id="2_3b2wt"]
 [ext_resource type="AnimationLibrary" uid="uid://c61hp5c2xd1p" path="res://characters/animations/combat_ranged.res" id="4_cc5f3"]
 [ext_resource type="AnimationLibrary" uid="uid://vxg1ajh18kek" path="res://characters/animations/general.res" id="5_gkelc"]
 [ext_resource type="AnimationLibrary" uid="uid://pynebh1ql65w" path="res://characters/animations/movement_basic.res" id="7_3b2wt"]
@@ -15,8 +15,8 @@
 [ext_resource type="PackedScene" path="res://characters/player/camera/player_camera.tscn" id="12_pcam"]
 
 [sub_resource type="StatPool" id="StatPool_3b2wt"]
-max_value = 135
-value = 135
+max_value = 90
+value = 90
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pch2i"]
 radius = 0.5751953

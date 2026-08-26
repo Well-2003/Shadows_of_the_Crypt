@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ShieldData" format=3 uid="uid://j4nr6spt5oq6"]
+
+[ext_resource type="Script" uid="uid://iro3x4w0sk12" path="res://characters/heroes/weapons/shield_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://ctoxsuqeinfmq" path="res://characters/heroes/weapons/assets/shield_badge.gltf" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+physical_reduction = 0.3
+magic_reduction = 0.05
+id = 13
+weapon_type = 7
+handedness = 2
+hand = 1
+scaling_multiplier = 0.0
+world_model = ExtResource("2_model")
+grip_position = Vector3(-0.05, 0, 0.192)
+idle_animation = "combat_melee/Melee_Blocking"
+shop_price = 60

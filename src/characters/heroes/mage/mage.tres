@@ -1,6 +1,9 @@
 [gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://euw7l0mqep6y"]
 
 [ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_4m84d"]
+[ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="2_weapon"]
+[ext_resource type="Resource" uid="uid://bsoftodtxivkd" path="res://characters/heroes/weapons/resources/magic/wand.tres" id="3_wand"]
+[ext_resource type="Resource" uid="uid://cm5ipljpb1pxe" path="res://characters/heroes/weapons/resources/melee/dagger_iron.tres" id="4_dagger"]
 
 [resource]
 script = ExtResource("1_4m84d")
@@ -11,6 +14,5 @@ move_speed = 5.5
 physical_damage_melee = 6.0
 magic_damage = 28.0
 resource_type = 1
-main_hand_weapon = 5
-off_hand_weapon = 6
+starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_wand"), ExtResource("4_dagger")])
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

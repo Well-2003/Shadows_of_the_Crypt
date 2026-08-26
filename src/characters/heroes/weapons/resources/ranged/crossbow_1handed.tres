@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://wvjwenwvdhh6"]
+
+[ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://df6qous1vf1wl" path="res://characters/heroes/weapons/assets/crossbow_1handed.gltf" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+id = 6
+weapon_type = 4
+base_damage = 12
+attack_speed = 1.5
+resource_cost = 1
+scaling = 1
+scaling_multiplier = 1.2
+world_model = ExtResource("2_model")
+grip_position = Vector3(0.09, 0.067, 0.031)
+grip_rotation = Vector3(-0.02, 90, -1.2)
+attack_animations = Array[String](["combat_ranged/Ranged_1H_Shoot"])
+idle_animation = "combat_ranged/Ranged_1H_Aiming"
+shop_price = 70
