@@ -34,21 +34,18 @@ func physics_update() -> State:
 	var hero: Hero = context
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 
+	if Input.is_action_just_pressed("attack"):
+		return hero.attack_state
+
+	if Input.is_action_pressed("aim"):
+		if hero.can_aim(): return hero.aim_state
+		if hero.can_block(): return hero.block_state
+
 	if input_dir == Vector2.ZERO:
 		return hero.idle_state
 
 	var delta: float = get_physics_process_delta_time()
-
-	if not hero.is_on_floor():
-		hero.velocity.y -= hero.gravity * delta
-
-	# Direction relative to the camera's turn, not the Hero (which no longer turns on its own).
-	var yaw_basis: Basis = Basis(Vector3.UP, hero.camera_yaw)
-	var direction: Vector3 = (yaw_basis.x * input_dir.x + yaw_basis.z * input_dir.y).normalized()
-
-	hero.velocity.x = direction.x * hero.hero_data.move_speed
-	hero.velocity.z = direction.z * hero.hero_data.move_speed
-	hero.move_and_slide()
+	hero.move_relative_to_camera(input_dir, 1.0, delta)
 
 	var target_angle: float = hero.camera_yaw + deg_to_rad(_turn_angle_for(input_dir))
 	hero.face_mesh_direction(target_angle, delta)

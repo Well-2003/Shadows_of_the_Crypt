@@ -13,6 +13,9 @@
 [ext_resource type="Script" uid="uid://n4hnou4gv1dt" path="res://components/state_machine/state_machine.gd" id="10_rbtco"]
 [ext_resource type="Script" uid="uid://cb5gx0v2qwg62" path="res://characters/player/states/walk_state.gd" id="11_rbtco"]
 [ext_resource type="PackedScene" path="res://characters/player/camera/player_camera.tscn" id="12_pcam"]
+[ext_resource type="Script" uid="uid://dd0sk0juvp488" path="res://characters/player/states/attack_state.gd" id="13_atk"]
+[ext_resource type="Script" uid="uid://bq8lynqqds2xs" path="res://characters/player/states/aim_state.gd" id="14_aim"]
+[ext_resource type="Script" uid="uid://bvnb56v55rjhw" path="res://characters/player/states/block_state.gd" id="15_blk"]
 
 [sub_resource type="StatPool" id="StatPool_3b2wt"]
 max_value = 90
@@ -58,3 +61,12 @@ script = ExtResource("10_gkelc")
 
 [node name="WalkState" type="Node" parent="StateMachine" unique_id=138111217]
 script = ExtResource("11_rbtco")
+
+[node name="AttackState" type="Node" parent="StateMachine" unique_id=900000301]
+script = ExtResource("13_atk")
+
+[node name="AimState" type="Node" parent="StateMachine" unique_id=900000302]
+script = ExtResource("14_aim")
+
+[node name="BlockState" type="Node" parent="StateMachine" unique_id=900000303]
+script = ExtResource("15_blk")

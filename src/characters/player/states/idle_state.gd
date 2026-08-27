@@ -14,12 +14,14 @@ func physics_update() -> State:
 	var hero : Hero = context
 	var delta: float = get_physics_process_delta_time()
 
-	if not hero.is_on_floor():
-		hero.velocity.y -= hero.gravity * delta
+	hero.stand_still(delta)
 
-	hero.velocity.x = 0.0
-	hero.velocity.z = 0.0
-	hero.move_and_slide()
+	if Input.is_action_just_pressed("attack"):
+		return hero.attack_state
+
+	if Input.is_action_pressed("aim"):
+		if hero.can_aim(): return hero.aim_state
+		if hero.can_block(): return hero.block_state
 
 	# Doesn't call face_mesh_direction here on purpose: keeps the last direction faced.
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
