@@ -34,6 +34,9 @@ func physics_update() -> State:
 	var hero: Hero = context
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 
+	if Input.is_action_just_pressed("jump") and hero.is_on_floor():
+		return hero.jump_state
+
 	if Input.is_action_just_pressed("attack"):
 		return hero.attack_state
 

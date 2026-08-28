@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://dd0sk0juvp488" path="res://characters/player/states/attack_state.gd" id="13_atk"]
 [ext_resource type="Script" uid="uid://bq8lynqqds2xs" path="res://characters/player/states/aim_state.gd" id="14_aim"]
 [ext_resource type="Script" uid="uid://bvnb56v55rjhw" path="res://characters/player/states/block_state.gd" id="15_blk"]
+[ext_resource type="Script" uid="uid://b1yubwy4xcsyy" path="res://characters/player/states/jump_state.gd" id="16_jmp"]
 
 [sub_resource type="StatPool" id="StatPool_3b2wt"]
 max_value = 90
@@ -70,3 +71,6 @@ script = ExtResource("14_aim")
 
 [node name="BlockState" type="Node" parent="StateMachine" unique_id=900000303]
 script = ExtResource("15_blk")
+
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=900000304]
+script = ExtResource("16_jmp")

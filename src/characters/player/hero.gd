@@ -61,6 +61,7 @@ var camera_yaw: float = 0.0
 @onready var attack_state: State = $StateMachine/AttackState
 @onready var aim_state: State = $StateMachine/AimState
 @onready var block_state: State = $StateMachine/BlockState
+@onready var jump_state: State = $StateMachine/JumpState
 #endregion
 
 

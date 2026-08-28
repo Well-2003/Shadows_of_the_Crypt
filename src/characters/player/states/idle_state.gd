@@ -16,6 +16,9 @@ func physics_update() -> State:
 
 	hero.stand_still(delta)
 
+	if Input.is_action_just_pressed("jump") and hero.is_on_floor():
+		return hero.jump_state
+
 	if Input.is_action_just_pressed("attack"):
 		return hero.attack_state
 
