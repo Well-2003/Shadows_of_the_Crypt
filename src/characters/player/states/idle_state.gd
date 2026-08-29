@@ -6,12 +6,15 @@ extends State
 ## PlayerWalkState, so the character keeps looking at the last direction it walked.
 
 
+var hero: Hero = null
+
+
 func enter() -> void:
-	context.play_animation("general/Idle_A", true)
+	hero = context
+	hero.play_animation("general/Idle_A", true)
 
 
 func physics_update() -> State:
-	var hero : Hero = context
 	var delta: float = get_physics_process_delta_time()
 
 	hero.stand_still(delta)

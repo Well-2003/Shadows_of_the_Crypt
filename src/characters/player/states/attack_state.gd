@@ -6,12 +6,13 @@ extends State
 ## movement. Which animation plays and how fast comes from the equipped weapon.
 
 
+var hero: Hero = null
 var _is_finished: bool = false
 
 
 ## Picks one of the weapons attack animations and starts the swing.
 func enter() -> void:
-	var hero: Hero = context
+	hero = context
 	_is_finished = false
 
 	var weapon: WeaponData = hero.equipped_weapon
@@ -30,7 +31,6 @@ func enter() -> void:
 
 ## Holds the hero in place until the swing ends.
 func physics_update() -> State:
-	var hero: Hero = context
 	hero.stand_still(get_physics_process_delta_time())
 
 	# Idle sends the hero straight back to walking if a direction is held, so

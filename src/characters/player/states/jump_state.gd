@@ -14,13 +14,14 @@ const AIR_CONTROL: float = 0.8
 ## How far into the animation the hero holds while rising, 0.5 being halfway.
 const APEX_POSE_RATIO: float = 0.5
 
+var hero: Hero = null
 var _is_falling: bool = false
 var _is_holding_apex: bool = false
 
 
 ## Pushes the hero off the ground and starts the jump animation.
 func enter() -> void:
-	var hero: Hero = context
+	hero = context
 	_is_falling = false
 	_is_holding_apex = false
 
@@ -35,7 +36,6 @@ func exit() -> void:
 
 ## Steers through the air, drives the animation and ends the state on landing.
 func physics_update() -> State:
-	var hero: Hero = context
 	var delta: float = get_physics_process_delta_time()
 
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
@@ -63,7 +63,7 @@ func physics_update() -> State:
 func _hold_apex_pose() -> void:
 	if _is_holding_apex: return
 
-	var animation_player: AnimationPlayer = context.animation_player
+	var animation_player: AnimationPlayer = hero.animation_player
 	var apex_time: float = animation_player.current_animation_length * APEX_POSE_RATIO
 
 	if animation_player.current_animation_position < apex_time: return
@@ -76,5 +76,5 @@ func _hold_apex_pose() -> void:
 func _resume_animation() -> void:
 	if not _is_holding_apex: return
 
-	context.animation_player.play()
+	hero.animation_player.play()
 	_is_holding_apex = false

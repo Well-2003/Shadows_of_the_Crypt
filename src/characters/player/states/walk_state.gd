@@ -23,15 +23,17 @@ const ANGLE_BACKWARD_LEFT: float = 135.0
 ## S, runs toward the camera, showing the character's face.
 const ANGLE_BACKWARD: float = 180.0
 
+var hero: Hero = null
+
 
 ## Plays the running animation on entering this state.
 func enter() -> void:
-	context.play_animation("movement_basic/Running_B", true)
+	hero = context
+	hero.play_animation("movement_basic/Running_B", true)
 
 
 ## Moves the Hero and turns the model to face the pressed direction, every physics frame.
 func physics_update() -> State:
-	var hero: Hero = context
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 
 	if Input.is_action_just_pressed("jump") and hero.is_on_floor():

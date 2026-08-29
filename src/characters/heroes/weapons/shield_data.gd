@@ -6,7 +6,6 @@ extends WeaponData
 ## ones here only matter while the shield is raised.
 
 
-@export_group("Blocking")
 ## Share of frontal physical damage removed, 0.3 means 30% less.
 @export var physical_reduction: float = 0.0
 ## Share of frontal magic damage removed.

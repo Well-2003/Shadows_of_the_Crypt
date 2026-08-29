@@ -6,9 +6,12 @@ extends State
 ## with the crosshair. The view zooms in for as long as the button is held.
 
 
+var hero: Hero = null
+
+
 ## Zooms the view in, shows the crosshair and draws the weapon.
 func enter() -> void:
-	var hero: Hero = context
+	hero = context
 
 	# Plays once instead of looping, the draw runs to its last frame and holds
 	# there, which is the pose of a bow already pulled back and ready.
@@ -19,7 +22,6 @@ func enter() -> void:
 
 ## Puts the view and the crosshair back the way they were.
 func exit() -> void:
-	var hero: Hero = context
 
 	hero.camera_pivot.set_aiming(false)
 	hero.hud.set_crosshair_visible(false)
@@ -27,7 +29,6 @@ func exit() -> void:
 
 ## Keeps the hero planted while the button is held, and lets them shoot.
 func physics_update() -> State:
-	var hero: Hero = context
 	var delta: float = get_physics_process_delta_time()
 
 	if not Input.is_action_pressed("aim"):

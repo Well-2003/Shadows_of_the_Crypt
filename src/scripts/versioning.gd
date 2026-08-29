@@ -20,7 +20,7 @@ extends Node
 static var game_version: Dictionary = {
 	"major": "0",
 	"minor": "0",
-	"build": "010",
+	"build": "011",
 	"label": "alpha"
 }
 ## Human readable game version string.

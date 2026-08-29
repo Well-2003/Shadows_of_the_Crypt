@@ -111,10 +111,10 @@ enum Scaling {
 
 ## Model tint per rarity, in the same order as Rarity.
 const RARITY_COLORS: Array[Color] = [
-	Color(1, 1, 1, 1),
-	Color(0.4, 1, 0.5, 1),
-	Color(0.35, 0.6, 1, 1),
-	Color(0.7, 0.35, 1, 1)
+	Color("ffffffff"),
+	Color("66ff80ff"),
+	Color("5999ffff"),
+	Color("b359ffff")
 ]
 
 
