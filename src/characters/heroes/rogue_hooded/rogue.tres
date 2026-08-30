@@ -1,6 +1,9 @@
 [gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://beetxiyuowt5f"]
 
 [ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_8ismc"]
+[ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="2_weapon"]
+[ext_resource type="Resource" uid="uid://wvjwenwvdhh6" path="res://characters/heroes/weapons/resources/ranged/crossbow_1handed.tres" id="3_crossbow"]
+[ext_resource type="Resource" uid="uid://cm5ipljpb1pxe" path="res://characters/heroes/weapons/resources/melee/dagger_iron.tres" id="4_dagger"]
 
 [resource]
 script = ExtResource("1_8ismc")
@@ -12,6 +15,5 @@ physical_damage_melee = 22.0
 physical_damage_ranged = 12.0
 resource_max = 25.0
 resource_type = 3
-main_hand_weapon = 4
-off_hand_weapon = 6
+starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_crossbow"), ExtResource("4_dagger")])
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

@@ -6,20 +6,28 @@ extends State
 ## PlayerWalkState, so the character keeps looking at the last direction it walked.
 
 
+var hero: Hero = null
+
+
 func enter() -> void:
-	context.play_animation("general/Idle_A", true)
+	hero = context
+	hero.play_animation("general/Idle_A", true)
 
 
 func physics_update() -> State:
-	var hero : Hero = context
 	var delta: float = get_physics_process_delta_time()
 
-	if not hero.is_on_floor():
-		hero.velocity.y -= hero.gravity * delta
+	hero.stand_still(delta)
 
-	hero.velocity.x = 0.0
-	hero.velocity.z = 0.0
-	hero.move_and_slide()
+	if Input.is_action_just_pressed("jump") and hero.is_on_floor():
+		return hero.jump_state
+
+	if Input.is_action_just_pressed("attack"):
+		return hero.attack_state
+
+	if Input.is_action_pressed("aim"):
+		if hero.can_aim(): return hero.aim_state
+		if hero.can_block(): return hero.block_state
 
 	# Doesn't call face_mesh_direction here on purpose: keeps the last direction faced.
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")

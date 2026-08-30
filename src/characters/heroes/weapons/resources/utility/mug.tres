@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cf8omrim8g38q" path="res://characters/heroes/weapons/assets/mug_full.gltf" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+id = 12
+weapon_type = 9
+handedness = 2
+hand = 0
+rarity = 0
+base_damage = 0
+attack_speed = 1.0
+resource_cost = 0
+scaling = 0
+scaling_multiplier = 0.0
+world_model = ExtResource("2_model")
+grip_position = Vector3(0.292, 0, 0.038)
+grip_rotation = Vector3(0, 177.6, 0)
+shop_price = 50
