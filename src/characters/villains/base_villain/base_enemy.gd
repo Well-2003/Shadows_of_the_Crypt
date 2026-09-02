@@ -29,12 +29,15 @@ const MESHES: Array[String] = [
 
 var skeleton: Skeleton3D = null
 
+## Bone attachments this script spawned, so it never frees the model's own ones.
+var equipment_slots: Array[BoneAttachment3D] = []
+
 @onready var base: Node3D = $RigMedium
 @onready var animation_player: AnimationPlayer = $RigMedium/AnimationPlayer
 @onready var state_machine: StateMachine = $StateMachine
 
 
-## Runs once on entering the scene: loads the class's mesh and sets up the states.
+## Runs once on entering the scene, loads the class's mesh and sets up the states.
 func _ready() -> void:
 	skeleton = base.get_node_or_null("Skeleton3D")
 	_set_villain_data(villain_data)
@@ -64,8 +67,7 @@ func _set_villain_data(value: VillainClassData) -> void:
 	var mesh_scene: PackedScene = load(MESHES[villain_data.id])
 	var mesh: Skeleton3D = mesh_scene.instantiate()
 
-	# Remove the old one before the new one: if both coexist, Godot renames one
-	# and the animation stops finding the bones.
+	# Remove the old one before the new one, if both coexist, Godot renames one and the animation stops finding the bones.
 	if skeleton:
 		base.remove_child(skeleton)
 		skeleton.queue_free()
@@ -79,29 +81,36 @@ func _set_villain_data(value: VillainClassData) -> void:
 
 ## Spawns the class's gear on the skeleton's hand bones.
 func _equip_weapons() -> void:
-	# Drops the old models first, otherwise re-equipping stacks copies.
-	for child: Node in skeleton.get_children():
-		if child is BoneAttachment3D:
-			child.free()
+	# Drops only what this script spawned, otherwise re-equipping stacks copies.
+	for slot: BoneAttachment3D in equipment_slots:
+		if is_instance_valid(slot):
+			slot.free()
 
-	for weapon: WeaponData in villain_data.weapons:
-		_attach_weapon(weapon)
+	equipment_slots.clear()
+
+	_attach_model(villain_data.main_hand_model, MAIN_HAND_BONE,
+		villain_data.main_hand_position, villain_data.main_hand_rotation)
+	# The second slot picks its own bone, so a quiver can ride the chest instead of swinging around on the hand.
+	_attach_model(villain_data.off_hand_model, villain_data.off_hand_bone,
+		villain_data.off_hand_position, villain_data.off_hand_rotation)
 
 
-## Attaches one weapon model to the hand bone the weapon asks for.
-func _attach_weapon(weapon: WeaponData) -> void:
-	if not weapon or not weapon.world_model: return
+## Hangs one model off the given bone, lined up by the class's grip values.
+func _attach_model(model_scene: PackedScene, bone_name: String,
+		grip_position: Vector3, grip_rotation: Vector3) -> void:
+	if not model_scene: return
 
 	var slot: BoneAttachment3D = BoneAttachment3D.new()
 	skeleton.add_child(slot)
 	# bone_name only resolves after add_child, when the node can already see the skeleton.
-	slot.bone_name = OFF_HAND_BONE if weapon.hand == WeaponData.Hand.OFF else MAIN_HAND_BONE
+	slot.bone_name = bone_name
 
-	var model: Node3D = weapon.world_model.instantiate()
+	var model: Node3D = model_scene.instantiate()
 	slot.add_child(model)
-	model.position = weapon.grip_position
-	model.rotation_degrees = weapon.grip_rotation
-	model.scale = Vector3.ONE * weapon.grip_scale
+	model.position = grip_position
+	model.rotation_degrees = grip_rotation
+
+	equipment_slots.append(slot)
 
 
 ## Holds the enemy in place, still letting gravity pull them down.

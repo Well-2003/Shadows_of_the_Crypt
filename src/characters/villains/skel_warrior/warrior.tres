@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="VillainClassData" format=3 uid="uid://n1da7gjfpgbt"]
+
+[ext_resource type="Script" uid="uid://ks61aqw2kden" path="res://characters/villains/villain_class_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://c6su344ytfglp" path="res://characters/villains/weapons/assets/Skeleton_Axe.gltf" id="2_main"]
+[ext_resource type="PackedScene" uid="uid://bywxs33gj4pa" path="res://characters/villains/weapons/assets/Skeleton_Shield_Large_A.gltf" id="3_off"]
+
+[resource]
+script = ExtResource("1_script")
+id = 3
+profile = "The wall of the pack. Swings its axe in a wide arc that has to be read early, shrugs off light hits without flinching, and punishes anyone who tries to trade blows with it."
+max_health = 120.0
+attack_damage = 28.0
+move_speed = 2.8
+chase_speed = 3.2
+escape_speed = 2.8
+detection_range = 14.0
+attack_range = 2.2
+telegraph_time = 1.2
+attack_cooldown = 2.5
+immune_to_light_stagger = true
+xp_reward = 50
+coins_min = 20
+coins_max = 30
+main_hand_model = ExtResource("2_main")
+main_hand_rotation = Vector3(0, 180, 0)
+off_hand_model = ExtResource("3_off")
+off_hand_position = Vector3(-0.05, 0, 0.192)

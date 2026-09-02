@@ -9,18 +9,18 @@ extends Resource
 
 ## Unique identifier for each enemy class in the game.
 enum VillainId {
-	## Slow caster with an area orb; fragile to blades, resistant to magic.
+	## Slow caster with a skull staff, fragile to blades and resistant to magic.
 	MAGE,
-	## The heavy one, a wall of health that cleaves and ignores light hits.
+	## Bare-boned fodder with a curved blade and a small shield, weak alone.
 	MINION,
-	## Keeps its distance and shoots, backing away when the player closes in.
+	## Hooded crossbow shooter that backs away when the player closes in.
 	ROGUE,
-	## Basic melee fodder, weak alone and dangerous in a group.
+	## Armoured axe carrier, a wall of health that ignores light hits.
 	WARRIOR
 }
 
 
-## Which enemy class this is; also the index BaseEnemy.MESHES uses for the model.
+## Which enemy class this is, also the index BaseEnemy.MESHES uses for the model.
 @export var id: VillainId
 ## Flavor text describing the enemy.
 @export_multiline var profile: String
@@ -42,7 +42,7 @@ enum VillainId {
 @export var detection_range: float = 15.0
 ## How close the enemy must be to attack.
 @export var attack_range: float = 1.5
-## Distance the enemy backs away from; 0 for melee, which never retreats.
+## Distance the enemy backs away from, 0 for melee, which never retreats.
 @export var retreat_range: float = 0.0
 ## Distance a ranged enemy tries to hold, between retreat_range and attack_range.
 @export var ideal_range: float = 0.0
@@ -56,9 +56,9 @@ enum VillainId {
 @export_group("Resistances")
 ## When true, light hits do not stagger the enemy out of its attack.
 @export var immune_to_light_stagger: bool = false
-## Multiplier on incoming physical damage; above 1.0 means it hurts more.
+## Multiplier on incoming physical damage, above 1.0 means it hurts more.
 @export var physical_damage_taken: float = 1.0
-## Multiplier on incoming magic damage; below 1.0 means it hurts less.
+## Multiplier on incoming magic damage, below 1.0 means it hurts less.
 @export var magic_damage_taken: float = 1.0
 
 @export_group("Rewards")
@@ -70,8 +70,20 @@ enum VillainId {
 @export var coins_max: int = 15
 
 @export_group("Equipment")
-## Models the enemy spawns holding; damage comes from attack_damage, not these.
-@export var weapons: Array[WeaponData] = []
+## Model held in the right hand. Purely visual, every hit is worth attack_damage.
+@export var main_hand_model: PackedScene = null
+## Offset from the right hand bone, measured in the editor until the model fits.
+@export var main_hand_position: Vector3 = Vector3.ZERO
+## Rotation in degrees from the right hand bone.
+@export var main_hand_rotation: Vector3 = Vector3.ZERO
+## Second model the enemy carries, a shield or a quiver. Left empty when there is none.
+@export var off_hand_model: PackedScene = null
+## Bone it hangs from. "handslot.l" for a shield, "chest" for something worn on the back.
+@export var off_hand_bone: String = "handslot.l"
+## Offset from that bone.
+@export var off_hand_position: Vector3 = Vector3.ZERO
+## Rotation in degrees from that bone.
+@export var off_hand_rotation: Vector3 = Vector3.ZERO
 
 
 ## Name shown to the player, taken from the id so there is no text to keep in sync.
