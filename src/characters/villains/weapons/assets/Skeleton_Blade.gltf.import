@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bapedxgji5k5q"
-path="res://.godot/imported/Skeleton_Shield_Large_B.gltf-9a303807a9766cd9b59043eb05e2c690.scn"
+uid="uid://dxq4yluvyr2nb"
+path="res://.godot/imported/Skeleton_Blade.gltf-f7ba1a6141ad7661c56b174b66e1cfe0.scn"
 
 [deps]
 
-source_file="res://characters/villains/assets/Skeleton_Shield_Large_B.gltf"
-dest_files=["res://.godot/imported/Skeleton_Shield_Large_B.gltf-9a303807a9766cd9b59043eb05e2c690.scn"]
+source_file="res://characters/villains/weapons/assets/Skeleton_Blade.gltf"
+dest_files=["res://.godot/imported/Skeleton_Blade.gltf-f7ba1a6141ad7661c56b174b66e1cfe0.scn"]
 
 [params]
 

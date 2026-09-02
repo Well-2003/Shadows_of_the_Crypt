@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dlgpdfk822r3v"
-path="res://.godot/imported/Skeleton_Shield_Small_A.gltf-5a83de8393ea44b1aa4cf608cfcdee93.scn"
+uid="uid://cg7jdhjwd4ynp"
+path="res://.godot/imported/Skeleton_Quiver.gltf-596da1bf9c4fde1d09247e13684110ce.scn"
 
 [deps]
 
-source_file="res://characters/villains/assets/Skeleton_Shield_Small_A.gltf"
-dest_files=["res://.godot/imported/Skeleton_Shield_Small_A.gltf-5a83de8393ea44b1aa4cf608cfcdee93.scn"]
+source_file="res://characters/villains/weapons/assets/Skeleton_Quiver.gltf"
+dest_files=["res://.godot/imported/Skeleton_Quiver.gltf-596da1bf9c4fde1d09247e13684110ce.scn"]
 
 [params]
 

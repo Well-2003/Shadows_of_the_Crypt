@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cg7jdhjwd4ynp"
-path="res://.godot/imported/Skeleton_Quiver.gltf-b6a1592e86a5eee72a2256b601c291b3.scn"
+uid="uid://55tsgdokds1q"
+path="res://.godot/imported/Skeleton_Arrow_Half.gltf-192cf51822bf266da4a62ff720197619.scn"
 
 [deps]
 
-source_file="res://characters/villains/assets/Skeleton_Quiver.gltf"
-dest_files=["res://.godot/imported/Skeleton_Quiver.gltf-b6a1592e86a5eee72a2256b601c291b3.scn"]
+source_file="res://characters/villains/weapons/assets/Skeleton_Arrow_Half.gltf"
+dest_files=["res://.godot/imported/Skeleton_Arrow_Half.gltf-192cf51822bf266da4a62ff720197619.scn"]
 
 [params]
 

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://buith6qpsfym2"]
+
+[ext_resource type="Script" uid="uid://dogfu0tny4cr0" path="res://characters/villains/base_villain/base_enemy.gd" id="1_yri6l"]
+[ext_resource type="AnimationLibrary" uid="uid://cflktyya2o334" path="res://characters/animations/combat_melee.res" id="2_d7cni"]
+[ext_resource type="Script" uid="uid://n4hnou4gv1dt" path="res://components/state_machine/state_machine.gd" id="2_e1ym0"]
+[ext_resource type="AnimationLibrary" uid="uid://c61hp5c2xd1p" path="res://characters/animations/combat_ranged.res" id="3_hfic1"]
+[ext_resource type="AnimationLibrary" uid="uid://vxg1ajh18kek" path="res://characters/animations/general.res" id="4_72s10"]
+[ext_resource type="AnimationLibrary" uid="uid://e4pulam5ldpb" path="res://characters/animations/movement_advanced.res" id="5_d7fe6"]
+[ext_resource type="AnimationLibrary" uid="uid://pynebh1ql65w" path="res://characters/animations/movement_basic.res" id="6_rk0hf"]
+[ext_resource type="AnimationLibrary" uid="uid://5ld3nudjgre2" path="res://characters/animations/special.res" id="7_u3rtr"]
+
+[sub_resource type="StatPool" id="StatPool_wa67f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p5kiv"]
+radius = 0.5751953
+height = 2.3065186
+
+[node name="BaseEnemy" type="CharacterBody3D" unique_id=315431870]
+script = ExtResource("1_yri6l")
+health_pool = SubResource("StatPool_wa67f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2128947577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01587832, 1.1553832, 0)
+shape = SubResource("CapsuleShape3D_p5kiv")
+
+[node name="RigMedium" type="Node3D" parent="." unique_id=156039661]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RigMedium" unique_id=1966356078]
+libraries/combat_melee = ExtResource("2_d7cni")
+libraries/combat_ranged = ExtResource("3_hfic1")
+libraries/general = ExtResource("4_72s10")
+libraries/movement_advanced = ExtResource("5_d7fe6")
+libraries/movement_basic = ExtResource("6_rk0hf")
+libraries/special = ExtResource("7_u3rtr")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1328068798]
+script = ExtResource("2_e1ym0")

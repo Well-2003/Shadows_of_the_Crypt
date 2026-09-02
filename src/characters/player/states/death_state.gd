@@ -23,6 +23,6 @@ func exit() -> void:
 	pass
 
 
-## Keeps the body where it fell; no input is read from here on.
+## Keeps the body where it fell, no input is read from here on.
 func physics_update() -> State:
 	return null

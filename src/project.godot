@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Shadows of the Crypt"
 config/version="0.0.011-alpha"
+run/main_scene="uid://y6ijgflt3ix4"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 

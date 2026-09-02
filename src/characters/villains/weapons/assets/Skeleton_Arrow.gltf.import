@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c6su344ytfglp"
-path="res://.godot/imported/Skeleton_Axe.gltf-766051e5706ad96d788619e63b5878a8.scn"
+uid="uid://6cu1xq4ee43f"
+path="res://.godot/imported/Skeleton_Arrow.gltf-d91e01a697bf9eac91ac4bb78e85f606.scn"
 
 [deps]
 
-source_file="res://characters/villains/assets/Skeleton_Axe.gltf"
-dest_files=["res://.godot/imported/Skeleton_Axe.gltf-766051e5706ad96d788619e63b5878a8.scn"]
+source_file="res://characters/villains/weapons/assets/Skeleton_Arrow.gltf"
+dest_files=["res://.godot/imported/Skeleton_Arrow.gltf-d91e01a697bf9eac91ac4bb78e85f606.scn"]
 
 [params]
 
