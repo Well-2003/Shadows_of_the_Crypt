@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="VillainClassData" format=3 uid="uid://c0gcrfr1250af"]
+
+[ext_resource type="Script" uid="uid://ks61aqw2kden" path="res://characters/villains/villain_class_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://dxq4yluvyr2nb" path="res://characters/villains/weapons/assets/Skeleton_Blade.gltf" id="2_main"]
+[ext_resource type="PackedScene" uid="uid://dlgpdfk822r3v" path="res://characters/villains/weapons/assets/Skeleton_Shield_Small_A.gltf" id="3_off"]
+
+[resource]
+script = ExtResource("1_script")
+id = 1
+profile = "The rank and file of the crypt. Weak on its own and easy to read, but it never shows up alone, and a group of them will surround anyone who stands still too long."
+chase_speed = 4.8
+escape_speed = 4.0
+main_hand_model = ExtResource("2_main")
+main_hand_rotation = Vector3(0, 180, 0)
+off_hand_model = ExtResource("3_off")
+off_hand_position = Vector3(-0.05, 0, 0.192)

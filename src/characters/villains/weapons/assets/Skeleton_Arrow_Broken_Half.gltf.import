@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bpnd3e8i1ic63"
-path="res://.godot/imported/Skeleton_Rogue.glb-1c621bd8027e0afc106e651567e99029.scn"
+uid="uid://bhps4j878mhdn"
+path="res://.godot/imported/Skeleton_Arrow_Broken_Half.gltf-11e0d1814b6fa765da08c9490aead9c1.scn"
 
 [deps]
 
-source_file="res://characters/villains/skel_rogue/Skeleton_Rogue.glb"
-dest_files=["res://.godot/imported/Skeleton_Rogue.glb-1c621bd8027e0afc106e651567e99029.scn"]
+source_file="res://characters/villains/weapons/assets/Skeleton_Arrow_Broken_Half.gltf"
+dest_files=["res://.godot/imported/Skeleton_Arrow_Broken_Half.gltf-11e0d1814b6fa765da08c9490aead9c1.scn"]
 
 [params]
 

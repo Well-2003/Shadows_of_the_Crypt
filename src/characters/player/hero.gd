@@ -40,7 +40,6 @@ static var player: Hero = null
 @export var refresh_equipment: bool = false: set = _refresh_equipment
 
 var skeleton: Skeleton3D = null
-var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var equipped_weapon: WeaponData = null
 var off_hand_item: WeaponData = null
@@ -216,7 +215,7 @@ func can_block() -> bool:
 ## Holds the hero in place, still letting gravity pull them down.
 func stand_still(delta: float) -> void:
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity += get_gravity() * delta
 
 	velocity.x = 0.0
 	velocity.z = 0.0
@@ -226,7 +225,7 @@ func stand_still(delta: float) -> void:
 ## Moves along the ground in the direction pressed, read relative to the camera.
 func move_relative_to_camera(input_dir: Vector2, speed_scale: float, delta: float) -> void:
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity += get_gravity() * delta
 
 	# The direction follows the camera turn, not the Hero, which no longer turns on its own.
 	var yaw_basis: Basis = Basis(Vector3.UP, camera_yaw)

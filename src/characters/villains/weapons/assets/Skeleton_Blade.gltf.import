@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bpnd3e8i1ic63"
-path="res://.godot/imported/Skeleton_Rogue.glb-1c621bd8027e0afc106e651567e99029.scn"
+uid="uid://dxq4yluvyr2nb"
+path="res://.godot/imported/Skeleton_Blade.gltf-f7ba1a6141ad7661c56b174b66e1cfe0.scn"
 
 [deps]
 
-source_file="res://characters/villains/skel_rogue/Skeleton_Rogue.glb"
-dest_files=["res://.godot/imported/Skeleton_Rogue.glb-1c621bd8027e0afc106e651567e99029.scn"]
+source_file="res://characters/villains/weapons/assets/Skeleton_Blade.gltf"
+dest_files=["res://.godot/imported/Skeleton_Blade.gltf-f7ba1a6141ad7661c56b174b66e1cfe0.scn"]
 
 [params]
 
