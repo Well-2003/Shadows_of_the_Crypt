@@ -34,7 +34,16 @@ var equipment_slots: Array[BoneAttachment3D] = []
 
 @onready var base: Node3D = $RigMedium
 @onready var animation_player: AnimationPlayer = $RigMedium/AnimationPlayer
+
+#region States shared by every enemy class
 @onready var state_machine: StateMachine = $StateMachine
+@onready var inactive_state: State = $StateMachine/InactiveState
+@onready var idle_state: State = $StateMachine/IdleState
+@onready var patrol_state: State = $StateMachine/PatrolState
+@onready var chase_state: State = $StateMachine/ChaseState
+@onready var hurt_state: State = $StateMachine/HurtState
+@onready var death_state: State = $StateMachine/DeathState
+#endregion
 
 
 ## Runs once on entering the scene, loads the class's mesh and sets up the states.
@@ -111,6 +120,26 @@ func _attach_model(model_scene: PackedScene, bone_name: String,
 	model.rotation_degrees = grip_rotation
 
 	equipment_slots.append(slot)
+
+
+## The attack this class uses, answered by MeleeEnemy and RangedEnemy.
+func get_attack_state() -> State:
+	return null
+
+
+## Where to go when the player gets too close, only ranged classes answer.
+func get_retreat_state() -> State:
+	return null
+
+
+## True while the player is close enough to be attacked from here.
+func is_player_in_attack_range(distance: float) -> bool:
+	return distance <= villain_data.attack_range
+
+
+## True while the player is too close, always false for melee.
+func is_player_too_close(distance: float) -> bool:
+	return distance < villain_data.retreat_range
 
 
 ## Holds the enemy in place, still letting gravity pull them down.

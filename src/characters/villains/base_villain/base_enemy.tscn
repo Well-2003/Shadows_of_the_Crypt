@@ -5,10 +5,16 @@
 [ext_resource type="Script" uid="uid://n4hnou4gv1dt" path="res://components/state_machine/state_machine.gd" id="2_e1ym0"]
 [ext_resource type="Resource" uid="uid://n1da7gjfpgbt" path="res://characters/villains/skel_warrior/warrior.tres" id="2_hfic1"]
 [ext_resource type="AnimationLibrary" uid="uid://c61hp5c2xd1p" path="res://characters/animations/combat_ranged.res" id="3_hfic1"]
+[ext_resource type="Script" uid="uid://b3nm11n5bibah" path="res://characters/villains/base_villain/states/inactive_enemy.gd" id="3_inact"]
 [ext_resource type="AnimationLibrary" uid="uid://vxg1ajh18kek" path="res://characters/animations/general.res" id="4_72s10"]
+[ext_resource type="Script" uid="uid://dfdgjiyyhtbkr" path="res://characters/villains/base_villain/states/idle_enemy.gd" id="4_idle"]
 [ext_resource type="AnimationLibrary" uid="uid://e4pulam5ldpb" path="res://characters/animations/movement_advanced.res" id="5_d7fe6"]
+[ext_resource type="Script" uid="uid://uvfskh3jufr8" path="res://characters/villains/base_villain/states/patrol_enemy.gd" id="5_patrol"]
+[ext_resource type="Script" uid="uid://c3lpnah1frngy" path="res://characters/villains/base_villain/states/chase_enemy.gd" id="6_chase"]
 [ext_resource type="AnimationLibrary" uid="uid://pynebh1ql65w" path="res://characters/animations/movement_basic.res" id="6_rk0hf"]
+[ext_resource type="Script" uid="uid://c3ahuavv4lcb5" path="res://characters/villains/base_villain/states/hurt_enemy.gd" id="7_hurt"]
 [ext_resource type="AnimationLibrary" uid="uid://5ld3nudjgre2" path="res://characters/animations/special.res" id="7_u3rtr"]
+[ext_resource type="Script" uid="uid://bpuhhmgxex00m" path="res://characters/villains/base_villain/states/death_enemy.gd" id="8_death"]
 
 [sub_resource type="StatPool" id="StatPool_wa67f"]
 max_value = 120
@@ -18,9 +24,10 @@ value = 120
 radius = 0.5751953
 height = 2.3065186
 
-[node name="BaseEnemy" type="CharacterBody3D" unique_id=315431870]
+[node name="BaseEnemy" type="CharacterBody3D" unique_id=315431870 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("1_yri6l")
 villain_data = ExtResource("2_hfic1")
+initial_state = NodePath("StateMachine/InactiveState")
 health_pool = SubResource("StatPool_wa67f")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2128947577]
@@ -39,3 +46,21 @@ libraries/special = ExtResource("7_u3rtr")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1328068798]
 script = ExtResource("2_e1ym0")
+
+[node name="InactiveState" type="Node" parent="StateMachine" unique_id=203505377]
+script = ExtResource("3_inact")
+
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=1377179428]
+script = ExtResource("4_idle")
+
+[node name="PatrolState" type="Node" parent="StateMachine" unique_id=1848302909]
+script = ExtResource("5_patrol")
+
+[node name="ChaseState" type="Node" parent="StateMachine" unique_id=365581828]
+script = ExtResource("6_chase")
+
+[node name="HurtState" type="Node" parent="StateMachine" unique_id=1688628759]
+script = ExtResource("7_hurt")
+
+[node name="DeathState" type="Node" parent="StateMachine" unique_id=851749203]
+script = ExtResource("8_death")

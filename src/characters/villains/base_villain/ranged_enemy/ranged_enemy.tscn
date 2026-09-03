@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://buith6qpsfym2" path="res://characters/villains/base_villain/base_enemy.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://bobv2bn1g1g24" path="res://characters/villains/base_villain/ranged_enemy/ranged_enemy.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://c2p6npj4ut84c" path="res://characters/villains/base_villain/ranged_enemy/exclusive_states/attack_ranger_enemy.gd" id="3_atk"]
+[ext_resource type="Script" uid="uid://d2m00p6rxq5ix" path="res://characters/villains/base_villain/ranged_enemy/exclusive_states/escape_enemy.gd" id="4_esc"]
+[ext_resource type="Resource" uid="uid://diswq42jm5fk3" path="res://characters/villains/skel_rogue/rogue.tres" id="5_data"]
+
+[node name="RangedEnemy" instance=ExtResource("1_base") node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_script")
+villain_data = ExtResource("5_data")
+initial_state = NodePath("StateMachine/InactiveState")
+
+[node name="AttackState" type="Node" parent="StateMachine"]
+script = ExtResource("3_atk")
+
+[node name="EscapeState" type="Node" parent="StateMachine"]
+script = ExtResource("4_esc")
