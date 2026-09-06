@@ -1,0 +1,24 @@
+[gd_scene format=3]
+
+[sub_resource type="SphereMesh" id="SphereMesh_orb"]
+radius = 0.12
+height = 0.24
+radial_segments = 12
+rings = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orb"]
+albedo_color = Color(0.45, 0.8, 1, 1)
+emission_enabled = true
+emission = Color(0.35, 0.7, 1, 1)
+emission_energy_multiplier = 3.0
+
+[node name="ArcaneOrb" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_orb")
+surface_material_override/0 = SubResource("StandardMaterial3D_orb")
+
+[node name="Light" type="OmniLight3D" parent="."]
+light_color = Color(0.4, 0.75, 1, 1)
+light_energy = 1.5
+omni_range = 3.0

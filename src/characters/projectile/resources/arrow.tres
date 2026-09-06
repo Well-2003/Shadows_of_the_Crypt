@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3 uid="uid://slnuw5na3kfs"]
+
+[ext_resource type="Script" uid="uid://bar4t0nda1vdo" path="res://characters/projectile/projectile_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://w8aavygvwy4a" path="res://characters/heroes/weapons/assets/arrow_bow.gltf" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+model = ExtResource("2_model")
+model_rotation = Vector3(0, 180, 0)
+speed = 28.0
+gravity_scale = 0.25
+hit_radius = 0.2

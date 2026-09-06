@@ -21,7 +21,19 @@ func get_retreat_state() -> State:
 	return escape_state
 
 
-## Stops chasing at the ideal range rather than at melee reach, so the enemy
-## settles into the band it wants to shoot from.
+## Stops chasing at the ideal range, so the enemy settles into its shooting band.
 func is_player_in_attack_range(distance: float) -> bool:
 	return distance <= villain_data.ideal_range
+
+
+## Sends this class's projectile flying at the player.
+func fire_shot() -> void:
+	if not villain_data.projectile: return
+
+	var origin: Vector3 = get_muzzle_position()
+	var direction: Vector3 = get_aim_direction(origin)
+
+	# No direction means there is nobody left to shoot at.
+	if direction == Vector3.ZERO: return
+
+	Projectile.spawn(villain_data.projectile, villain_data.attack_damage, self, origin, direction)

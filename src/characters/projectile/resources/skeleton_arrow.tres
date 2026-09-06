@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3]
+
+[ext_resource type="Script" path="res://characters/projectile/projectile_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://6cu1xq4ee43f" path="res://characters/villains/weapons/assets/Skeleton_Arrow.gltf" id="2_model"]
+
+[resource]
+script = ExtResource("1_script")
+model = ExtResource("2_model")
+model_rotation = Vector3(90, 0, 0)
+speed = 38.0
+gravity_scale = 0.12
+lifetime = 5.0
+hit_radius = 0.2
+damage_type = 0

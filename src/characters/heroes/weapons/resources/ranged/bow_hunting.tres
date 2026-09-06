@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://cij65tlxl5glm" path="res://characters/heroes/weapons/assets/bow_withString.gltf" id="2_model"]
+[ext_resource type="Resource" path="res://characters/projectile/resources/arrow.tres" id="9_proj"]
 
 [resource]
 script = ExtResource("1_script")
@@ -10,11 +11,15 @@ weapon_type = 3
 handedness = 1
 hand = 1
 base_damage = 25
+impact_ratio = 0.1
 resource_cost = 1
 scaling = 1
 scaling_multiplier = 1.8
 world_model = ExtResource("2_model")
+projectile = ExtResource("9_proj")
 grip_rotation = Vector3(90, 180, 0)
 attack_animations = Array[String](["combat_ranged/Ranged_Bow_Release"])
 idle_animation = "combat_ranged/Ranged_Bow_Draw"
+attack_animation_up = "combat_ranged/Ranged_Bow_Release_Up"
+idle_animation_up = "combat_ranged/Ranged_Bow_Draw_Up"
 shop_price = 90

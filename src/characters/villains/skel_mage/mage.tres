@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ks61aqw2kden" path="res://characters/villains/villain_class_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://c8pr65p732ti" path="res://characters/villains/weapons/assets/Skeleton_Staff.gltf" id="2_main"]
+[ext_resource type="Resource" path="res://characters/projectile/resources/arcane_orb.tres" id="9_proj"]
 
 [resource]
 script = ExtResource("1_script")
@@ -24,3 +25,5 @@ coins_min = 25
 coins_max = 35
 main_hand_model = ExtResource("2_main")
 main_hand_rotation = Vector3(0, 180, 0)
+attack_animations = Array[String](["combat_ranged/Ranged_Magic_Shoot", "combat_ranged/Ranged_Magic_Spellcasting"])
+projectile = ExtResource("9_proj")

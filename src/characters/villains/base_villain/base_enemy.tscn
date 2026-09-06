@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://c3ahuavv4lcb5" path="res://characters/villains/base_villain/states/hurt_enemy.gd" id="7_hurt"]
 [ext_resource type="AnimationLibrary" uid="uid://5ld3nudjgre2" path="res://characters/animations/special.res" id="7_u3rtr"]
 [ext_resource type="Script" uid="uid://bpuhhmgxex00m" path="res://characters/villains/base_villain/states/death_enemy.gd" id="8_death"]
+[ext_resource type="Script" uid="uid://bgk8js1cwdalh" path="res://characters/damage_flash/damage_flash.gd" id="9_flash"]
 
 [sub_resource type="StatPool" id="StatPool_wa67f"]
 max_value = 120
@@ -25,6 +26,8 @@ radius = 0.5751953
 height = 2.3065186
 
 [node name="BaseEnemy" type="CharacterBody3D" unique_id=315431870 node_paths=PackedStringArray("initial_state")]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_yri6l")
 villain_data = ExtResource("2_hfic1")
 initial_state = NodePath("StateMachine/InactiveState")
@@ -34,15 +37,19 @@ health_pool = SubResource("StatPool_wa67f")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01587832, 1.1553832, 0)
 shape = SubResource("CapsuleShape3D_p5kiv")
 
-[node name="RigMedium" type="Node3D" parent="." unique_id=156039661]
+[node name="Rig_Medium" type="Node3D" parent="." unique_id=156039661]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="RigMedium" unique_id=1966356078]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Rig_Medium" unique_id=1966356078]
+root_node = NodePath("../..")
 libraries/combat_melee = ExtResource("2_d7cni")
 libraries/combat_ranged = ExtResource("3_hfic1")
 libraries/general = ExtResource("4_72s10")
 libraries/movement_advanced = ExtResource("5_d7fe6")
 libraries/movement_basic = ExtResource("6_rk0hf")
 libraries/special = ExtResource("7_u3rtr")
+
+[node name="DamageFlash" type="Node" parent="." unique_id=900000402]
+script = ExtResource("9_flash")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1328068798]
 script = ExtResource("2_e1ym0")

@@ -1,11 +1,12 @@
 class_name PlayerWalkState
 extends State
-## Movement state: walks relative to the camera's turn and rotates the model
-## to face the pressed direction (diagonals included).
+## Walk state: moves relative to the camera and turns the model to face the input.
+##
+## The turn covers the diagonals too, so the model always faces where it is
+## actually going instead of only forward and back.
 
 
-# Angles the model faces, in degrees, where 0° is wherever the camera is pointing.
-# Negative turns right and positive turns left, following how Godot rotates on the Y axis.
+# Angles the model faces, in degrees, 0° being where the camera points and negative turning right.
 ## W, runs away from the camera, showing the character's back.
 const ANGLE_FORWARD: float = 0.0
 ## W and D, runs diagonally ahead, to the right.
@@ -34,6 +35,10 @@ func enter() -> void:
 
 ## Moves the Hero and turns the model to face the pressed direction, every physics frame.
 func physics_update() -> State:
+	var interrupt: State = hero.consume_interrupt_state()
+	if interrupt:
+		return interrupt
+
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 
 	if Input.is_action_just_pressed("jump") and hero.is_on_floor():
@@ -80,5 +85,5 @@ func _turn_angle_for(input_dir: Vector2) -> float:
 	if pressing_backward:
 		return ANGLE_BACKWARD
 
-	# Just "forward" (or no forward/backward/sideways key at all).
+	# Just forward, or no direction key at all.
 	return ANGLE_FORWARD

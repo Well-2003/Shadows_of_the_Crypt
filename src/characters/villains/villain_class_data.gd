@@ -2,8 +2,8 @@ class_name VillainClassData
 extends Resource
 ## Combat attributes and equipment for one class of enemy.
 ##
-## One .tres per enemy class. The weapons carry no damage of their own: they
-## are only the models the enemy spawns holding, and every hit is worth
+## One .tres per enemy class. The weapons carry no damage of their own: they are
+## only the models the enemy spawns holding, and every hit is worth
 ## attack_damage no matter what is in its hands.
 
 
@@ -84,6 +84,14 @@ enum VillainId {
 @export var off_hand_position: Vector3 = Vector3.ZERO
 ## Rotation in degrees from that bone.
 @export var off_hand_rotation: Vector3 = Vector3.ZERO
+
+@export_group("Projectile")
+## Shot this class fires, empty for melee. Every hit is worth attack_damage.
+@export var projectile: ProjectileData = null
+
+@export_group("Animations")
+## Attacks this class can play, one picked per swing, since they follow the weapon.
+@export var attack_animations: Array[String] = []
 
 
 ## Name shown to the player, taken from the id so there is no text to keep in sync.

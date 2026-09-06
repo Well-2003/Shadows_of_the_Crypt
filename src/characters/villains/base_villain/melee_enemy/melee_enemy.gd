@@ -14,3 +14,10 @@ extends BaseEnemy
 ## Swings whatever is in the enemy's hand.
 func get_attack_state() -> State:
 	return attack_state
+
+
+## Spends the wait between swings behind the shield, when it carries one.
+func get_waiting_state() -> State:
+	if not has_shield(): return null
+
+	return block_state

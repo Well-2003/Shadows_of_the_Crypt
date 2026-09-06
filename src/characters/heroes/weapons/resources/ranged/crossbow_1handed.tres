@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://df6qous1vf1wl" path="res://characters/heroes/weapons/assets/crossbow_1handed.gltf" id="2_model"]
+[ext_resource type="Resource" path="res://characters/projectile/resources/bolt.tres" id="9_proj"]
 
 [resource]
 script = ExtResource("1_script")
@@ -9,10 +10,12 @@ id = 6
 weapon_type = 4
 base_damage = 12
 attack_speed = 1.5
+impact_ratio = 0.15
 resource_cost = 1
 scaling = 1
 scaling_multiplier = 1.2
 world_model = ExtResource("2_model")
+projectile = ExtResource("9_proj")
 grip_position = Vector3(0.09, 0.067, 0.031)
 grip_rotation = Vector3(-0.02, 90, -1.2)
 attack_animations = Array[String](["combat_ranged/Ranged_1H_Shoot"])

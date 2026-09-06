@@ -2,8 +2,8 @@ class_name PlayerIdleState
 extends State
 ## Idle state: keeps the idle animation playing and zeroes horizontal velocity.
 ##
-## Doesn't touch the direction the model faces — that's only touched by
-## PlayerWalkState, so the character keeps looking at the last direction it walked.
+## Does not touch the direction the model faces, that is only touched by
+## PlayerWalkState, so the character keeps looking where it last walked.
 
 
 var hero: Hero = null
@@ -19,6 +19,10 @@ func physics_update() -> State:
 
 	hero.stand_still(delta)
 
+	var interrupt: State = hero.consume_interrupt_state()
+	if interrupt:
+		return interrupt
+
 	if Input.is_action_just_pressed("jump") and hero.is_on_floor():
 		return hero.jump_state
 
@@ -29,7 +33,7 @@ func physics_update() -> State:
 		if hero.can_aim(): return hero.aim_state
 		if hero.can_block(): return hero.block_state
 
-	# Doesn't call face_mesh_direction here on purpose: keeps the last direction faced.
+	# face_mesh_direction is skipped on purpose, to keep the last facing.
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 	if input_dir != Vector2.ZERO:
 		return hero.walk_state
