@@ -202,8 +202,6 @@ shape = SubResource("BoxShape3D_wall_ew")
 
 [node name="Hero" parent="." unique_id=452964916 instance=ExtResource("3_35u8j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.1715245)
-collision_layer = 1
-collision_mask = 1
 health_pool = SubResource("StatPool_2ape5")
 
 [node name="MeleeEnemy" parent="." unique_id=1247660291 instance=ExtResource("5_lwucv")]

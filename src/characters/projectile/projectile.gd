@@ -37,8 +37,14 @@ var _time_left: float = 0.0
 
 
 ## Puts one projectile in the level, already flying.
-static func spawn(new_data: ProjectileData, new_damage: float, new_shooter: Node3D,
-		from_position: Vector3, direction: Vector3) -> Projectile:
+static func spawn(
+	new_data: ProjectileData, 
+	new_damage: float, 
+	new_shooter: Node3D,
+	from_position: Vector3, 
+	direction: Vector3
+	) -> Projectile:
+		
 	# load and not preload, or the scene would wait on its own script.
 	var scene: PackedScene = load(SCENE_UID)
 	var projectile: Projectile = scene.instantiate()
@@ -56,8 +62,14 @@ static func spawn(new_data: ProjectileData, new_damage: float, new_shooter: Node
 
 
 ## Starts one shot on its way, right after the projectile enters the tree.
-func launch(new_data: ProjectileData, new_damage: float, new_shooter: Node3D,
-		from_position: Vector3, direction: Vector3) -> void:
+func launch(
+	new_data: ProjectileData, 
+	new_damage: float, 
+	new_shooter: Node3D,
+	from_position: Vector3, 
+	direction: Vector3
+	) -> void:
+	
 	data = new_data
 	damage = new_damage
 	shooter = new_shooter
@@ -119,9 +131,6 @@ func _face_travel_direction() -> void:
 
 ## Lands the hit on whatever the shot ran into, then clears the shot away.
 func _on_body_entered(body: Node3D) -> void:
-	# The layers already keep the shooter out, this covers a point blank shot into its own wall.
-	if body == shooter: return
-
 	_deal_damage(body)
 	queue_free()
 

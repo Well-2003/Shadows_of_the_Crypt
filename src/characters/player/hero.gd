@@ -399,7 +399,13 @@ func _is_inside_block_cone(shield: ShieldData, from_position: Vector3) -> bool:
 
 
 ## Plays an animation by its "library/animation" name (e.g. "general/Idle_A").
-func play_animation(animation_name: StringName, loop: bool = false, blend: float = 0.2, speed: float = 1.0) -> void:
+func play_animation(
+	animation_name: StringName, 
+	loop: bool = false, 
+	blend: float = 0.2, 
+	speed: float = 1.0
+	) -> void:
+		
 	if not animation_player.has_animation(animation_name):
 		print("animation error")
 		return

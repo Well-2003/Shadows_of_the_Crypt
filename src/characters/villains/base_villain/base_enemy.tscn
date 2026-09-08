@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://bpuhhmgxex00m" path="res://characters/villains/base_villain/states/death_enemy.gd" id="8_death"]
 [ext_resource type="Script" uid="uid://bgk8js1cwdalh" path="res://characters/damage_flash/damage_flash.gd" id="9_flash"]
 
-[sub_resource type="StatPool" id="StatPool_wa67f"]
+[sub_resource type="StatPool" id="StatPool_fxr6h"]
 max_value = 120
 value = 120
 
@@ -31,7 +31,7 @@ collision_mask = 3
 script = ExtResource("1_yri6l")
 villain_data = ExtResource("2_hfic1")
 initial_state = NodePath("StateMachine/InactiveState")
-health_pool = SubResource("StatPool_wa67f")
+health_pool = SubResource("StatPool_fxr6h")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2128947577]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01587832, 1.1553832, 0)
