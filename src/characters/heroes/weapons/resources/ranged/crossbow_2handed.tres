@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://bbsl0nxjancd5" path="res://characters/heroes/weapons/assets/crossbow_2handed.gltf" id="2_model"]
+[ext_resource type="Resource" path="res://characters/projectile/resources/bolt.tres" id="9_proj"]
 
 [resource]
 script = ExtResource("1_script")
@@ -21,3 +22,5 @@ grip_rotation = Vector3(-0.02, 90, -1.2)
 attack_animations = Array[String](["combat_ranged/Ranged_2H_Shoot"])
 idle_animation = "combat_ranged/Ranged_2H_Aiming"
 shop_price = 95
+projectile = ExtResource("9_proj")
+impact_ratio = 0.15

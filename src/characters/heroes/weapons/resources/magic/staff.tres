@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://vjlo43drvtke" path="res://characters/heroes/weapons/assets/staff.gltf" id="2_model"]
+[ext_resource type="Resource" path="res://characters/projectile/resources/arcane_orb.tres" id="9_proj"]
 
 [resource]
 script = ExtResource("1_script")
@@ -17,3 +18,6 @@ world_model = ExtResource("2_model")
 grip_rotation = Vector3(0, 180, 0)
 attack_animations = Array[String](["combat_ranged/Ranged_Magic_Shoot", "combat_ranged/Ranged_Magic_Spellcasting_Long"])
 shop_price = 100
+projectile = ExtResource("9_proj")
+idle_animation = "combat_ranged/Ranged_Magic_Raise"
+impact_ratio = 0.3

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dnrxc8mcgkpfh"]
+
+[ext_resource type="Script" uid="uid://bhh7myvquwrt6" path="res://characters/projectile/projectile.gd" id="1_proj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hit"]
+resource_local_to_scene = true
+radius = 0.15
+
+[node name="Projectile" type="Area3D" unique_id=2125664663]
+monitorable = false
+script = ExtResource("1_proj")
+
+[node name="HitShape" type="CollisionShape3D" parent="." unique_id=897248669]
+shape = SubResource("SphereShape3D_hit")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

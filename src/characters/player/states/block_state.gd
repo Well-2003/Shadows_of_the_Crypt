@@ -27,11 +27,16 @@ func exit() -> void:
 func physics_update() -> State:
 	var delta: float = get_physics_process_delta_time()
 
+	# Only a hit the shield missed gets here, a blocked one raises no stagger.
+	var interrupt: State = hero.consume_interrupt_state()
+	if interrupt:
+		return interrupt
+
 	if not Input.is_action_pressed("aim"):
 		return hero.idle_state
 
 	hero.stand_still(delta)
-	# The shield only covers a cone in front, so the hero always faces the camera.
+	# The shield covers a cone in front, so the hero always faces the camera.
 	hero.face_mesh_direction(hero.camera_yaw, delta)
 
 	return null

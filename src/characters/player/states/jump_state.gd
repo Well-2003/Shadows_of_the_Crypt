@@ -3,8 +3,7 @@ extends State
 ## Jump state, entered with the jump button, lasts until the hero lands again.
 ##
 ## Runs a single jump animation, but freezes it halfway while the hero is still
-## rising and lets it finish on the way down, so the pose follows the arc
-## instead of racing ahead of it.
+## rising and lets it finish on the way down, so the pose follows the arc.
 
 
 ## Upward speed given the moment the hero leaves the ground.
@@ -38,10 +37,14 @@ func exit() -> void:
 func physics_update() -> State:
 	var delta: float = get_physics_process_delta_time()
 
+	# Only death is read mid air, a flinch has no ground to hold the hero still.
+	if hero.is_dead():
+		return hero.death_state
+
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 	hero.move_relative_to_camera(input_dir, AIR_CONTROL, delta)
 
-	# Mid-air the hero turns with the mouse instead of standing still while the camera swings around them.
+	# Turns with the mouse mid air, instead of the camera swinging around a still hero.
 	hero.face_mesh_direction(hero.camera_yaw, delta)
 
 	if hero.velocity.y < 0.0:

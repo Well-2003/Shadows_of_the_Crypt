@@ -2,9 +2,9 @@ class_name WeaponData
 extends Resource
 ## Stats, model and animations for one weapon.
 ##
-## One .tres per weapon. The stats are picked from enums so there is little
-## to mistype, the grip values are typed in because they are measured by hand
-## until the model sits right on the bone.
+## One .tres per weapon. The stats are picked from enums so there is little to
+## mistype, and the grip values are measured by hand until the model sits right
+## on the bone.
 
 
 ## Every weapon in the game, also used as its display name and save id.
@@ -134,6 +134,12 @@ const RARITY_COLORS: Array[Color] = [
 @export var base_damage: int = 0
 ## Animation speed multiplier, above 1.0 attacks faster.
 @export var attack_speed: float = 1.0
+## How far into the animation the hit lands or the shot leaves, as a share of it.
+@export var impact_ratio: float = 0.45
+## How far the swing reaches, in metres. Ignored by weapons that fire a shot.
+@export var attack_range: float = 2.0
+## Width of the wedge the swing covers, which is how a heavy weapon hits a group.
+@export var attack_arc_degrees: float = 90.0
 ## Stamina, mana or ammo spent per use.
 @export var resource_cost: int = 0
 ## Which player attribute is added to the damage.
@@ -146,8 +152,8 @@ const RARITY_COLORS: Array[Color] = [
 @export var world_model: PackedScene = null
 ## Model shown in front of the camera in first person.
 @export var view_model: PackedScene = null
-## Projectile spawned on attack, left empty for melee weapons.
-@export var projectile_scene: PackedScene = null
+## Shot fired on attack, empty for melee. The damage comes from the values above.
+@export var projectile: ProjectileData = null
 
 @export_group("Grip")
 ## Offset from the hand bone, measured in the editor until the model fits.
@@ -162,6 +168,10 @@ const RARITY_COLORS: Array[Color] = [
 @export var attack_animations: Array[String] = []
 ## Animation held while this weapon is equipped and the hero stands still.
 @export var idle_animation: String = ""
+## Attack played while aiming steeply up, empty falls back to the level one.
+@export var attack_animation_up: String = ""
+## Pose held while aiming steeply up.
+@export var idle_animation_up: String = ""
 
 @export_group("Shop")
 ## Price in coins.
@@ -171,6 +181,25 @@ const RARITY_COLORS: Array[Color] = [
 ## Name shown to the player, taken from the id so there is no text to keep in sync.
 func get_display_name() -> String:
 	return WeaponId.keys()[id].capitalize()
+
+
+## The pose to hold while aiming, raised when the hero is pointing steeply up.
+func get_idle_animation(aiming_up: bool) -> String:
+	if aiming_up and not idle_animation_up.is_empty():
+		return idle_animation_up
+
+	return idle_animation
+
+
+## One attack for this weapon, raised when aiming up, empty when it has none.
+func get_attack_animation(aiming_up: bool) -> String:
+	if aiming_up and not attack_animation_up.is_empty():
+		return attack_animation_up
+
+	if attack_animations.is_empty():
+		return ""
+
+	return attack_animations.pick_random()
 
 
 ## Tint for this weapon's rarity.

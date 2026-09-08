@@ -8,6 +8,7 @@ script = ExtResource("1_script")
 id = 1
 base_damage = 15
 attack_speed = 1.2
+attack_arc_degrees = 100.0
 scaling_multiplier = 1.2
 world_model = ExtResource("2_model")
 grip_rotation = Vector3(0, 180, 0)

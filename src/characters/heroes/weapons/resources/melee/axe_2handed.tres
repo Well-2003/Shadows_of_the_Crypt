@@ -20,3 +20,5 @@ grip_rotation = Vector3(0, 180, 0)
 attack_animations = Array[String](["combat_melee/Melee_2H_Attack_Chop", "combat_melee/Melee_2H_Attack_Slice", "combat_melee/Melee_2H_Attack_Spin"])
 idle_animation = "combat_melee/Melee_2H_Idle"
 shop_price = 100
+attack_range = 2.8
+attack_arc_degrees = 170.0

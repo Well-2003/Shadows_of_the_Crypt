@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bneeettfpyka2" path="res://terrain/floor_tile_large.gltf" id="1_floor"]
 [ext_resource type="PackedScene" uid="uid://wvmakt5b6jiq" path="res://terrain/wall.gltf" id="2_wall"]
 [ext_resource type="PackedScene" uid="uid://duv0oj48x5gil" path="res://characters/player/hero.tscn" id="3_35u8j"]
+[ext_resource type="PackedScene" path="res://characters/villains/base_villain/melee_enemy/melee_enemy.tscn" id="5_lwucv"]
 
 [sub_resource type="Environment" id="Environment_x3t7u"]
 background_mode = 1
@@ -20,6 +21,14 @@ size = Vector3(20, 4, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wall_ew"]
 size = Vector3(1, 4, 20)
+
+[sub_resource type="StatPool" id="StatPool_2ape5"]
+max_value = 80
+value = 80
+
+[sub_resource type="StatPool" id="StatPool_lwucv"]
+max_value = 120
+value = 120
 
 [node name="TestRoom" type="Node3D" unique_id=462660987]
 script = ExtResource("0_troom")
@@ -192,3 +201,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 0)
 shape = SubResource("BoxShape3D_wall_ew")
 
 [node name="Hero" parent="." unique_id=452964916 instance=ExtResource("3_35u8j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.1715245)
+health_pool = SubResource("StatPool_2ape5")
+
+[node name="MeleeEnemy" parent="." unique_id=1247660291 instance=ExtResource("5_lwucv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9093795, 0, -7.607211)
+health_pool = SubResource("StatPool_lwucv")
