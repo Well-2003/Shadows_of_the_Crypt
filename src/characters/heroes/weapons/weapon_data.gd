@@ -136,10 +136,8 @@ const RARITY_COLORS: Array[Color] = [
 @export var attack_speed: float = 1.0
 ## How far into the animation the hit lands or the shot leaves, as a share of it.
 @export var impact_ratio: float = 0.45
-## How far the swing reaches, in metres. Ignored by weapons that fire a shot.
-@export var attack_range: float = 2.0
-## Width of the wedge the swing covers, which is how a heavy weapon hits a group.
-@export var attack_arc_degrees: float = 90.0
+## How long the blade stays able to hit after impact_ratio, in seconds.
+@export var hitbox_window: float = 0.35
 ## Stamina, mana or ammo spent per use.
 @export var resource_cost: int = 0
 ## Which player attribute is added to the damage.
@@ -162,6 +160,18 @@ const RARITY_COLORS: Array[Color] = [
 @export var grip_rotation: Vector3 = Vector3.ZERO
 ## Size of the model in the hand, 1.0 keeps the size it was modelled at.
 @export var grip_scale: float = 1.0
+## Pose the model is held in for its hotbar icon, turned until it reads well.
+@export var icon_rotation: Vector3 = Vector3(0.0, 30.0, 45.0)
+
+@export_group("Hitbox")
+## Length of the capsule that does the hitting, in metres along the blade.
+@export var hitbox_length: float = 0.8
+## Thickness of that capsule, which is how much a near miss still catches.
+@export var hitbox_radius: float = 0.22
+## Offset from the model's own origin, measured the same way as the grip values.
+@export var hitbox_offset: Vector3 = Vector3(0.0, 0.4, 0.0)
+## Rotation in degrees from the model, for a blade that does not run along its Y.
+@export var hitbox_rotation: Vector3 = Vector3.ZERO
 
 @export_group("Animations")
 ## Attack animations, one is picked per swing, as library/animation.

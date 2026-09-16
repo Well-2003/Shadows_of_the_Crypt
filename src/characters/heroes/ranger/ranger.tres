@@ -15,5 +15,6 @@ physical_damage_melee = 10.0
 physical_damage_ranged = 20.0
 resource_max = 40.0
 resource_type = 2
+resource_regen_per_second = 2.0
 starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_bow"), ExtResource("4_dagger")])
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

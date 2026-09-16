@@ -16,6 +16,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://5ld3nudjgre2" path="res://characters/animations/special.res" id="7_u3rtr"]
 [ext_resource type="Script" uid="uid://bpuhhmgxex00m" path="res://characters/villains/base_villain/states/death_enemy.gd" id="8_death"]
 [ext_resource type="Script" uid="uid://bgk8js1cwdalh" path="res://characters/damage_flash/damage_flash.gd" id="9_flash"]
+[ext_resource type="PackedScene" path="res://characters/health_bar_3d/health_bar_3d.tscn" id="10_hbar"]
 
 [sub_resource type="StatPool" id="StatPool_fxr6h"]
 max_value = 120
@@ -32,6 +33,8 @@ script = ExtResource("1_yri6l")
 villain_data = ExtResource("2_hfic1")
 initial_state = NodePath("StateMachine/InactiveState")
 health_pool = SubResource("StatPool_fxr6h")
+attack_layer = 16
+attack_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2128947577]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01587832, 1.1553832, 0)
@@ -50,6 +53,9 @@ libraries/special = ExtResource("7_u3rtr")
 
 [node name="DamageFlash" type="Node" parent="." unique_id=900000402]
 script = ExtResource("9_flash")
+
+[node name="HealthBar3D" parent="." unique_id=930000202 instance=ExtResource("10_hbar")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15, 0)
 
 [node name="StateMachine" type="Node" parent="." unique_id=1328068798]
 script = ExtResource("2_e1ym0")

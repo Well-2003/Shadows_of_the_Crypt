@@ -11,5 +11,6 @@ max_health = 135.0
 move_speed = 5.2
 physical_damage_melee = 25.0
 resource_max = 80.0
+resource_regen_per_second = 12.0
 starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_axe")])
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

@@ -8,19 +8,28 @@ extends State
 
 ## How far into the swing the blow lands, 0.6 being a little past the middle.
 const IMPACT_RATIO: float = 0.6
+## Share of the wind-up that passes before the weapon becomes dangerous.
+##
+## Not the whole of it, because the animations do not agree on when the weapon
+## sweeps past the target: a chop reaches it near the end, a horizontal slice
+## about a fifth of the way in. Going live early covers both, and the enemy is
+## still visibly winding up for the first part of it.
+const LIVE_AFTER_RATIO: float = 0.25
 
 var enemy: MeleeEnemy = null
 
-var _time_until_hit: float = 0.0
-var _has_hit: bool = false
+var _elapsed: float = 0.0
+var _is_live: bool = false
+var _is_committed: bool = false
 var _is_finished: bool = false
 
 
 ## Starts the telegraph and then the swing.
 func enter() -> void:
 	enemy = context
-	_time_until_hit = enemy.villain_data.telegraph_time
-	_has_hit = false
+	_elapsed = 0.0
+	_is_live = false
+	_is_committed = false
 	_is_finished = false
 
 	# Started here, so the wait between attacks counts from when this one began.
@@ -37,6 +46,9 @@ func enter() -> void:
 
 ## Drops the connection when the swing is cut short, so the next one is free.
 func exit() -> void:
+	# A swing cut short would otherwise leave the weapon live for the rest of the fight.
+	enemy.close_swing()
+
 	var finished: Signal = enemy.animation_player.animation_finished
 	if finished.is_connected(_on_animation_finished):
 		finished.disconnect(_on_animation_finished)
@@ -54,7 +66,7 @@ func physics_update() -> State:
 		return interrupt
 
 	_aim_at_player(delta)
-	_advance_telegraph(delta)
+	_advance_swing(delta)
 
 	if _is_finished:
 		return enemy.chase_state
@@ -80,8 +92,8 @@ func _play_swing(animation_name: String) -> void:
 
 ## Turns the enemy towards the player, but only while the swing is still coming.
 func _aim_at_player(delta: float) -> void:
-	# Once the blow is out it is committed, or it would track the player mid swing.
-	if _has_hit: return
+	# Once the blow is committed it stops tracking, or it would follow mid swing.
+	if _is_committed: return
 
 	var player: Hero = enemy.get_player()
 	if not player: return
@@ -89,15 +101,23 @@ func _aim_at_player(delta: float) -> void:
 	enemy.face_position(player.global_position, delta)
 
 
-## Counts the wind-up down and lands the blow at the end of it.
-func _advance_telegraph(delta: float) -> void:
-	if _has_hit: return
+## Runs the swing's clock: the weapon goes live, the aim commits, the weapon shuts.
+func _advance_swing(delta: float) -> void:
+	_elapsed += delta
 
-	_time_until_hit -= delta
-	if _time_until_hit > 0.0: return
+	var telegraph: float = enemy.villain_data.telegraph_time
 
-	_has_hit = true
-	enemy.hit_player()
+	if not _is_live and _elapsed >= telegraph * LIVE_AFTER_RATIO:
+		_is_live = true
+		enemy.open_swing()
+
+	# The aim still commits at the end of the wind-up, whatever the weapon is doing.
+	if not _is_committed and _elapsed >= telegraph:
+		_is_committed = true
+
+	if _is_live and _elapsed >= telegraph + enemy.villain_data.hitbox_window:
+		_is_live = false
+		enemy.close_swing()
 
 
 func _on_animation_finished(_animation_name: StringName) -> void:

@@ -50,9 +50,16 @@ const MESHES: Array[String] = [
 ## How long the body takes to fade from solid to gone.
 @export var corpse_fade_time: float = 4.0
 
+@export_group("Combat Layers")
+## Layer this character's shots and swings sit on.
+@export_flags_3d_physics var attack_layer: int = 0
+## Layers this character's shots and swings are able to hit.
+@export_flags_3d_physics var attack_mask: int = 0
+
 var skeleton: Skeleton3D = null
 
 var main_hand_slot: BoneAttachment3D = null
+var main_hand_hitbox: WeaponHitbox = null
 var home_position: Vector3 = Vector3.ZERO
 var attack_cooldown_left: float = 0.0
 var retreat_cooldown_left: float = 0.0
@@ -64,6 +71,7 @@ var _is_stagger_pending: bool = false
 @onready var base: Node3D = $Rig_Medium
 @onready var animation_player: AnimationPlayer = $Rig_Medium/AnimationPlayer
 @onready var damage_flash: DamageFlash = $DamageFlash
+@onready var health_bar: HealthBar3D = $HealthBar3D
 
 #region States shared by every enemy class
 @onready var state_machine: StateMachine = $StateMachine
@@ -149,6 +157,26 @@ func _equip_weapons() -> void:
 	# The second slot picks its own bone, so a quiver can ride the chest.
 	_attach_model(villain_data.off_hand_model, villain_data.off_hand_bone,
 		villain_data.off_hand_position, villain_data.off_hand_rotation)
+
+	_attach_hitbox()
+
+
+## Hangs the swing volume on the weapon model, for the classes that swing at all.
+func _attach_hitbox() -> void:
+	main_hand_hitbox = null
+
+	if Engine.is_editor_hint(): return
+
+	# A class that fires a shot lands its damage through the projectile instead.
+	if villain_data.projectile: return
+	if not main_hand_slot or main_hand_slot.get_child_count() == 0: return
+
+	var hitbox: WeaponHitbox = WeaponHitbox.create(self, villain_data.hitbox_length,
+		villain_data.hitbox_radius, villain_data.hitbox_offset, villain_data.hitbox_rotation)
+
+	# Hung on the model, so the grip rotation already lines it up with the weapon.
+	main_hand_slot.get_child(0).add_child(hitbox)
+	main_hand_hitbox = hitbox
 
 
 ## Hangs one model on a bone and answers with its slot, or null when there is no model.
@@ -246,16 +274,26 @@ func start_retreat_cooldown() -> void:
 	retreat_cooldown_left = RETREAT_COOLDOWN
 
 
-## Lands one hit on the player, if they are still within reach.
-func hit_player() -> void:
-	var player: Hero = get_player()
-	if not player: return
+## Makes the weapon able to hit, for the window the swing stays dangerous.
+func open_swing() -> void:
+	if not main_hand_hitbox: return
 
-	# Measured again on impact, so stepping out of the swing is what saves the player.
-	if get_distance_to_player() > villain_data.attack_range: return
+	main_hand_hitbox.open(villain_data.attack_damage, false)
 
-	# The enemy position tells the hero which way the blow came from, for the shield.
-	player.take_damage(villain_data.attack_damage, global_position)
+
+## Shuts the weapon again, which is what ends the swing's chance to land.
+func close_swing() -> void:
+	if not main_hand_hitbox: return
+
+	main_hand_hitbox.close()
+
+
+## Drops the swing volume for good, for a body that will never swing again.
+func discard_hitbox() -> void:
+	if not is_instance_valid(main_hand_hitbox): return
+
+	main_hand_hitbox.queue_free()
+	main_hand_hitbox = null
 
 
 ## Where a shot leaves the enemy: the hand holding the weapon.
@@ -389,6 +427,7 @@ func _on_health_changed(old_value: int, new_value: int, increased: bool) -> void
 
 	# Every hit blinks: the flinch means staggered, the blink means damaged.
 	damage_flash.flash()
+	health_bar.show_damage(new_value, health_pool.get_max_value())
 
 	# Heavy classes only flinch on a real chunk of health, or a group chain-stuns them.
 	if villain_data.immune_to_light_stagger:

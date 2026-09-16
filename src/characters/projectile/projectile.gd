@@ -9,19 +9,6 @@ extends Area3D
 ## The scene every projectile is spawned from, by uid so moving the file is safe.
 const SCENE_UID: String = "uid://dnrxc8mcgkpfh"
 
-#region Physics layers, as the bit values the engine stores them in
-## Walls and floor.
-const LAYER_WORLD: int = 1
-## The hero's body.
-const LAYER_PLAYER: int = 2
-## The enemies' bodies.
-const LAYER_ENEMY: int = 4
-## Shots and swings coming from the hero.
-const LAYER_PLAYER_HITBOX: int = 8
-## Shots and swings coming from the enemies.
-const LAYER_ENEMY_HITBOX: int = 16
-#endregion
-
 ## Downward pull at gravity_scale 1.0, the same the characters fall with.
 const GRAVITY: float = 9.8
 
@@ -96,16 +83,14 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-## Puts the shot on its shooter's side and points it at the other one.
+## Puts the shot on its shooter's side, copied from the layers set on the shooter's scene.
 func _apply_sides() -> void:
-	# Layers are added because each is a separate bit, which is how Godot holds a mask.
-	if shooter is Hero:
-		collision_layer = LAYER_PLAYER_HITBOX
-		collision_mask = LAYER_WORLD + LAYER_ENEMY
-		return
+	collision_layer = shooter.attack_layer
+	collision_mask = shooter.attack_mask
 
-	collision_layer = LAYER_ENEMY_HITBOX
-	collision_mask = LAYER_WORLD + LAYER_PLAYER
+	# An empty mask makes every shot pass through everything without a word.
+	if collision_mask == 0:
+		push_warning("Projectile: " + shooter.name + " has no attack_mask set on its scene.")
 
 
 ## Hangs the model on the shot and sizes the ball it notices things with.
@@ -131,6 +116,15 @@ func _face_travel_direction() -> void:
 
 ## Lands the hit on whatever the shot ran into, then clears the shot away.
 func _on_body_entered(body: Node3D) -> void:
+	# The masks are meant to make this impossible, so reaching it means a scene is
+	# overriding its character onto the wrong layer. Reported rather than swallowed,
+	# because a shooter killing itself is the loudest symptom of the quietest bug.
+	if body == shooter:
+		push_error("Projectile: " + shooter.name + " was hit by its own shot. Check its "
+			+ "collision_layer, which should not be one the shot's mask covers.")
+		queue_free()
+		return
+
 	_deal_damage(body)
 	queue_free()
 

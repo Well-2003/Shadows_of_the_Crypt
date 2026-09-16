@@ -8,13 +8,13 @@ extends Node3D
 
 ## How far the crosshair looks for something to aim at.
 const AIM_DISTANCE: float = 60.0
-## What the aim may land on: walls and enemies, never the hero firing the shot.
-const AIM_LAYERS: int = Projectile.LAYER_WORLD + Projectile.LAYER_ENEMY
 
 ## How far down the camera can look.
 @export var pitch_min_degrees: float = -40.0
 ## How far up the camera can look.
 @export var pitch_max_degrees: float = 60.0
+## What the crosshair may land on: walls and enemies, never the hero firing the shot.
+@export_flags_3d_physics var aim_mask: int = 0
 
 @export_group("Zoom")
 ## Field of view while walking around, and at the far end of the aim.
@@ -79,7 +79,7 @@ func get_aim_point() -> Vector3:
 	var ray_end: Vector3 = ray_start - camera.global_basis.z * AIM_DISTANCE
 
 	var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(ray_start, ray_end)
-	query.collision_mask = AIM_LAYERS
+	query.collision_mask = aim_mask
 
 	var hit: Dictionary = get_world_3d().direct_space_state.intersect_ray(query)
 	if hit.is_empty():
