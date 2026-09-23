@@ -52,7 +52,7 @@ enum ResourceType {
 ## How much of the resource comes back per second, so a class is never stranded.
 @export var resource_regen_per_second: float = 8.0
 ## How long after spending before the refill starts, in seconds.
-@export var resource_regen_delay: float = 1.0
+@export var resource_regen_delay: float = 2.5
 
 @export_group("Equipment")
 ## Starting gear, index 0 fills hotbar slot 1 and index 1 fills slot 2.

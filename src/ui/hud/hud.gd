@@ -14,7 +14,7 @@ const MANA_COLOR: Color = Color(0.2, 0.42, 0.85)
 @onready var ammo_counter: Label = %AmmoCounter
 @onready var level_label: Label = %LevelLabel
 @onready var crosshair: Control = %Crosshair
-@onready var hotbar_row: HBoxContainer = %HotbarRow
+@onready var hotbar_row: BoxContainer = %HotbarRow
 
 
 ## Builds the slots and picks up the experience the run has already earned.

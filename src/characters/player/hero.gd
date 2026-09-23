@@ -11,6 +11,9 @@ extends CharacterBody3D
 ## How fast the model turns to a new direction.
 const MESH_TURN_SPEED: float = 12.0
 
+## Share of the move speed left when a stamina class has run out of stamina.
+const EXHAUSTED_SPEED_SCALE: float = 0.55
+
 ## Where a shot leaves from when the hero has nothing in their hand.
 const DEFAULT_MUZZLE_HEIGHT: float = 1.4
 
@@ -63,8 +66,11 @@ var mesh_facing: float = 0.0
 var camera_yaw: float = 0.0
 
 var _is_stagger_pending: bool = false
+var _is_block_hit_pending: bool = false
 var _regen_delay_left: float = 0.0
 var _regen_carry: float = 0.0
+var _regen_boost: float = 1.0
+var _regen_boost_left: float = 0.0
 
 @onready var base: Node3D = $Rig_Medium
 @onready var animation_player: AnimationPlayer = $Rig_Medium/AnimationPlayer
@@ -149,6 +155,7 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 
 	# Counted here and not in a state, so the refill runs whatever the hero is doing.
+	_advance_regen_boost(delta)
 	_regenerate_resource(delta)
 
 	state_machine.physics_update()
@@ -407,6 +414,9 @@ func take_damage(amount: float, from_position: Vector3, is_magic: bool = false) 
 	# A caught hit does not break the guard, which is the point of holding it.
 	if reduction <= 0.0:
 		_is_stagger_pending = true
+		return
+
+	_is_block_hit_pending = true
 
 
 ## The state the last hit forces on the hero, cleared on read so it fires once.
@@ -419,6 +429,35 @@ func consume_interrupt_state() -> State:
 
 	_is_stagger_pending = false
 	return hurt_state
+
+
+## True once per hit the shield caught, cleared on read so it plays a single time.
+func consume_block_hit() -> bool:
+	if not _is_block_hit_pending: return false
+
+	_is_block_hit_pending = false
+	return true
+
+
+## True while a stamina class has nothing left to spend, which slows it down.
+func is_exhausted() -> bool:
+	if not hero_data: return false
+	if hero_data.resource_type != HeroClassData.ResourceType.STAMINA: return false
+
+	return resource_pool.is_depleted()
+
+
+## Puts resource back in the pool, for a quiver, a potion or a shop refill.
+func restore_resource(amount: int) -> void:
+	if amount <= 0: return
+
+	resource_pool.increase(amount)
+
+
+## Speeds the refill up for a while, for a potion that boosts recovery.
+func start_regen_boost(multiplier: float, duration: float) -> void:
+	_regen_boost = multiplier
+	_regen_boost_left = duration
 
 
 ## Holds the hero in place, still letting gravity pull them down.
@@ -440,8 +479,13 @@ func move_relative_to_camera(input_dir: Vector2, speed_scale: float, delta: floa
 	var yaw_basis: Basis = Basis(Vector3.UP, camera_yaw)
 	var direction: Vector3 = (yaw_basis.x * input_dir.x + yaw_basis.z * input_dir.y).normalized()
 
-	velocity.x = direction.x * hero_data.move_speed * speed_scale
-	velocity.z = direction.z * hero_data.move_speed * speed_scale
+	var speed: float = hero_data.move_speed * speed_scale
+	# Out of stamina the hero drags, which is what makes spending it a choice.
+	if is_exhausted():
+		speed *= EXHAUSTED_SPEED_SCALE
+
+	velocity.x = direction.x * speed
+	velocity.z = direction.z * speed
 	move_and_slide()
 
 
@@ -453,8 +497,21 @@ func face_mesh_direction(target_angle: float, delta: float) -> void:
 	base.rotation.y = deg_to_rad(180.0) + mesh_facing
 
 
+## Counts the boost down and puts the refill back to its normal speed.
+func _advance_regen_boost(delta: float) -> void:
+	if _regen_boost_left <= 0.0: return
+
+	_regen_boost_left -= delta
+	if _regen_boost_left > 0.0: return
+
+	_regen_boost = 1.0
+
+
 ## Puts the spent resource back, once the hero has gone a moment without attacking.
 func _regenerate_resource(delta: float) -> void:
+	# Ammo never comes back on its own: a quiver, a potion or the shop refills it.
+	if hero_data.is_ammo(): return
+
 	if resource_pool.get_value() >= resource_pool.get_max_value(): return
 
 	if _regen_delay_left > 0.0:
@@ -462,7 +519,7 @@ func _regenerate_resource(delta: float) -> void:
 		return
 
 	# The pool counts in whole points, so the fraction is carried until it makes one.
-	_regen_carry += hero_data.resource_regen_per_second * delta
+	_regen_carry += hero_data.resource_regen_per_second * _regen_boost * delta
 
 	var whole_points: int = int(_regen_carry)
 	if whole_points <= 0: return

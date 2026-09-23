@@ -31,7 +31,7 @@ const AIM_DISTANCE: float = 60.0
 var _aim_zoom: float = 1.0
 var _is_aiming: bool = false
 
-@onready var camera: Camera3D = $Camera3D
+@onready var camera: Camera3D = $SpringArm3D/Camera3D
 
 
 ## Forces this camera to stay active, without depending on node entry order.
