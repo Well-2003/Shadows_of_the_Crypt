@@ -49,7 +49,21 @@ enum ResourceType {
 @export var resource_max: float = 100.0
 ## Which resource this class spends: stamina, mana, arrows or bolts.
 @export var resource_type: ResourceType = ResourceType.STAMINA
+## How much of the resource comes back per second, so a class is never stranded.
+@export var resource_regen_per_second: float = 8.0
+## How long after spending before the refill starts, in seconds.
+@export var resource_regen_delay: float = 2.5
 
 @export_group("Equipment")
 ## Starting gear, index 0 fills hotbar slot 1 and index 1 fills slot 2.
 @export var starting_weapons: Array[WeaponData] = []
+
+
+## True when the resource is ammo, which the HUD counts instead of drawing a bar.
+func is_ammo() -> bool:
+	return resource_type == ResourceType.ARROWS or resource_type == ResourceType.BOLTS
+
+
+## Name shown to the player, taken from the enum so there is no text to keep in sync.
+func get_resource_name() -> String:
+	return ResourceType.keys()[resource_type].capitalize()

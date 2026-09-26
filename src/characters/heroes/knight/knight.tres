@@ -12,5 +12,6 @@ profile = "A robust and resilient warrior, a master of defensive combat. He has 
 max_health = 150.0
 move_speed = 4.5
 physical_damage_melee = 18.0
+resource_regen_per_second = 3.5
 starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_sword"), ExtResource("4_shield")])
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

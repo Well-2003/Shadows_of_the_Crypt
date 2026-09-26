@@ -7,20 +7,7 @@ extends Area3D
 
 
 ## The scene every projectile is spawned from, by uid so moving the file is safe.
-const SCENE_UID: String = "uid://dnrxc8mcgkpfh"
-
-#region Physics layers, as the bit values the engine stores them in
-## Walls and floor.
-const LAYER_WORLD: int = 1
-## The hero's body.
-const LAYER_PLAYER: int = 2
-## The enemies' bodies.
-const LAYER_ENEMY: int = 4
-## Shots and swings coming from the hero.
-const LAYER_PLAYER_HITBOX: int = 8
-## Shots and swings coming from the enemies.
-const LAYER_ENEMY_HITBOX: int = 16
-#endregion
+const SCENE_UID: String = "res://characters/projectile/projectile.tscn"
 
 ## Downward pull at gravity_scale 1.0, the same the characters fall with.
 const GRAVITY: float = 9.8
@@ -32,6 +19,8 @@ var shooter: Node3D = null
 var velocity: Vector3 = Vector3.ZERO
 
 var _time_left: float = 0.0
+var _is_stuck: bool = false
+var _materials: Array[StandardMaterial3D] = []
 
 @onready var hit_shape: CollisionShape3D = $HitShape
 
@@ -85,6 +74,9 @@ func launch(
 
 ## Flies the shot and clears it away once its time is up.
 func _physics_process(delta: float) -> void:
+	# Planted where it landed, so nothing moves it and its lifetime stops counting.
+	if _is_stuck: return
+
 	# Applied before the step, so the shot curves as it travels instead of dropping at the end.
 	velocity.y -= GRAVITY * data.gravity_scale * delta
 
@@ -96,16 +88,14 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-## Puts the shot on its shooter's side and points it at the other one.
+## Puts the shot on its shooter's side, copied from the layers set on the shooter's scene.
 func _apply_sides() -> void:
-	# Layers are added because each is a separate bit, which is how Godot holds a mask.
-	if shooter is Hero:
-		collision_layer = LAYER_PLAYER_HITBOX
-		collision_mask = LAYER_WORLD + LAYER_ENEMY
-		return
+	collision_layer = shooter.attack_layer
+	collision_mask = shooter.attack_mask
 
-	collision_layer = LAYER_ENEMY_HITBOX
-	collision_mask = LAYER_WORLD + LAYER_PLAYER
+	# An empty mask makes every shot pass through everything without a word.
+	if collision_mask == 0:
+		push_error("Projectile: " + shooter.name + " has no attack_mask set on its scene.")
 
 
 ## Hangs the model on the shot and sizes the ball it notices things with.
@@ -131,8 +121,129 @@ func _face_travel_direction() -> void:
 
 ## Lands the hit on whatever the shot ran into, then clears the shot away.
 func _on_body_entered(body: Node3D) -> void:
+	# Already planted, and the area only goes quiet on the next frame.
+	if _is_stuck: return
+
+	# Use the centerline at the height of the shot to avoid hitting external bones (like the arms).
+	if body == shooter:
+		push_error("Projectile: " + shooter.name + " was hit by its own shot. Check its "
+			+ "collision_layer, which should not be one the shot's mask covers.")
+		queue_free()
+		return
+
 	_deal_damage(body)
+
+	# An arrow stays planted in whatever it hit, an orb has nothing to plant.
+	if not data.sticks_on_hit:
+		queue_free()
+		return
+
+	_stick_into(body)
+
+
+## Plants the shot where it landed, instead of clearing it away.
+func _stick_into(body: Node3D) -> void:
+	_is_stuck = true
+
+	# Deferred, because the physics server is still flushing the hit that got here.
+	set_deferred("monitoring", false)
+	call_deferred("_attach_to", body)
+
+
+## Hangs the shot on what it hit, so it rides along with an enemy that walks off.
+func _attach_to(body: Node3D) -> void:
+	if not is_instance_valid(body):
+		queue_free()
+		return
+
+	if body is BaseEnemy:
+		_plant_in_skeleton(body)
+	else:
+		reparent(body, true)
+		# The shot stopped a whole hit_radius short of the surface, so it is pushed in.
+		global_position -= global_basis.z * (data.hit_radius + data.stick_depth)
+
+	_copy_materials()
+
+	var tween: Tween = create_tween()
+	tween.tween_interval(data.stick_linger_time)
+	tween.tween_method(_set_alpha, 1.0, 0.0, data.stick_fade_time)
+	tween.tween_callback(_clear_away)
+
+
+## Plants the shot in the nearest bone, so it rides the animation and not the body.
+func _plant_in_skeleton(enemy: BaseEnemy) -> void:
+	if not enemy.skeleton:
+		reparent(enemy, true)
+		return
+
+	# # Use the center of the body at the point of impact to find the right bone, rather than relying on extended limbs.
+	var entry: Vector3 = Vector3(enemy.global_position.x, global_position.y, enemy.global_position.z)
+	var bone: int = _nearest_bone(enemy.skeleton, entry)
+
+	var slot: BoneAttachment3D = BoneAttachment3D.new()
+	enemy.skeleton.add_child(slot)
+	slot.bone_idx = bone
+
+	reparent(slot, true)
+
+	# Moved onto the bone itself. The collision capsule is far wider than the
+	# skeleton inside it, so where the shot stopped is out in the air beside it.
+	global_position = _bone_position(enemy.skeleton, bone) + global_basis.z * data.stick_depth
+
+
+## The bone closest to a spot, so the shot plants in the part of the body it hit.
+func _nearest_bone(skeleton: Skeleton3D, spot: Vector3) -> int:
+	var closest: int = 0
+	var shortest: float = INF
+
+	for bone: int in skeleton.get_bone_count():
+		var distance: float = spot.distance_to(_bone_position(skeleton, bone))
+
+		if distance < shortest:
+			shortest = distance
+			closest = bone
+
+	return closest
+
+
+## Where one bone sits in the world right now.
+func _bone_position(skeleton: Skeleton3D, bone: int) -> Vector3:
+	return skeleton.global_transform * skeleton.get_bone_global_pose(bone).origin
+
+
+## Clears the shot away, along with the bone slot it was planted on.
+func _clear_away() -> void:
+	var slot: Node = get_parent()
+
+	# Freeing the slot takes the shot with it, since the shot hangs off it.
+	if slot is BoneAttachment3D:
+		slot.queue_free()
+		return
+
 	queue_free()
+
+
+## Copies the model's materials, or fading one arrow would fade every other one.
+func _copy_materials() -> void:
+	# owned = false because the model comes from a scene instanced at runtime.
+	for mesh: MeshInstance3D in find_children("*", "MeshInstance3D", true, false):
+		for surface: int in mesh.get_surface_override_material_count():
+			var material: StandardMaterial3D = mesh.get_active_material(surface)
+			if not material: continue
+
+			var copy: StandardMaterial3D = material.duplicate()
+			# Alpha up front, since an opaque material throws the fade away.
+			copy.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			mesh.set_surface_override_material(surface, copy)
+
+			_materials.append(copy)
+
+
+## Puts every copied material at the same transparency, fading the shot as one.
+func _set_alpha(alpha: float) -> void:
+	for material: StandardMaterial3D in _materials:
+		material.albedo_color.a = alpha
 
 
 ## Passes the damage on, if what was hit is something that can take it.

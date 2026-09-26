@@ -1,0 +1,47 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://characters/health_bar_3d/health_bar_3d.gd" id="1_script"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bar"]
+resource_local_to_scene = true
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="Gradient" id="Gradient_frame"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.2, 0.18, 0.17, 0.95, 0.07, 0.06, 0.06, 0.95)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_frame"]
+gradient = SubResource("Gradient_frame")
+width = 128
+height = 16
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_fill"]
+offsets = PackedFloat32Array(0, 1)
+colors = PackedColorArray(0.92, 0.25, 0.28, 1, 0.58, 0.05, 0.1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fill"]
+gradient = SubResource("Gradient_fill")
+width = 124
+height = 12
+fill_to = Vector2(0, 1)
+
+[node name="HealthBar3D" type="Sprite3D"]
+cast_shadow = 0
+pixel_size = 0.007
+billboard = 2
+texture = SubResource("ViewportTexture_bar")
+script = ExtResource("1_script")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(128, 16)
+render_target_update_mode = 1
+
+[node name="ProgressBar" type="TextureProgressBar" parent="SubViewport"]
+offset_right = 128.0
+offset_bottom = 16.0
+value = 100.0
+texture_under = SubResource("GradientTexture2D_frame")
+texture_progress = SubResource("GradientTexture2D_fill")
+texture_progress_offset = Vector2(2, 2)

@@ -85,6 +85,18 @@ enum VillainId {
 ## Rotation in degrees from that bone.
 @export var off_hand_rotation: Vector3 = Vector3.ZERO
 
+@export_group("Hitbox")
+## Length of the capsule that does the hitting, in metres along the weapon.
+@export var hitbox_length: float = 1.0
+## Thickness of that capsule, which is how much a near miss still catches.
+@export var hitbox_radius: float = 0.32
+## Offset from the model's own origin, measured the same way as the grip values.
+@export var hitbox_offset: Vector3 = Vector3(0.0, 0.4, 0.0)
+## Rotation in degrees from the model, for a weapon that does not run along its Y.
+@export var hitbox_rotation: Vector3 = Vector3.ZERO
+## How long the weapon stays able to hit after the telegraph, in seconds.
+@export var hitbox_window: float = 0.5
+
 @export_group("Projectile")
 ## Shot this class fires, empty for melee. Every hit is worth attack_damage.
 @export var projectile: ProjectileData = null
