@@ -10,3 +10,4 @@ model_rotation = Vector3(0, 180, 0)
 speed = 28.0
 gravity_scale = 0.25
 hit_radius = 0.2
+sticks_on_hit = true

@@ -22,6 +22,8 @@ const BLOCK_REDUCTION: float = 0.5
 const HEAVY_HIT_THRESHOLD: float = 0.15
 ## How long a cornered enemy fights on before it tries to back away again.
 const RETREAT_COOLDOWN: float = 4.0
+## How many enemies may swing at the player at the same time.
+const MAX_ATTACKERS: int = 1
 ## Height a shot is aimed at on the target, so it flies level instead of at the feet.
 const AIM_HEIGHT: float = 1.2
 ## Where a shot leaves from when the enemy has nothing in its hand.
@@ -257,6 +259,31 @@ func has_shield() -> bool:
 ## True when the wait between one attack and the next is over.
 func is_attack_ready() -> bool:
 	return attack_cooldown_left <= 0.0
+
+
+## True while this enemy is in the middle of its own attack.
+func is_attacking() -> bool:
+	var attack: State = get_attack_state()
+	if not attack: return false
+
+	return state_machine.current_state == attack
+
+
+## True while a turn to swing is free, so a group takes turns instead of all at once.
+func can_take_attack_turn() -> bool:
+	# A class that shoots keeps its own rhythm: the crowding happens in melee.
+	if villain_data.projectile: return true
+
+	var attackers: int = 0
+
+	for other: BaseEnemy in get_tree().get_nodes_in_group("Enemy"):
+		if other == self: continue
+		if other.villain_data.projectile: continue
+
+		if other.is_attacking():
+			attackers += 1
+
+	return attackers < MAX_ATTACKERS
 
 
 ## Starts the wait that keeps the enemy from attacking again right away.

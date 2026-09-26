@@ -14,6 +14,9 @@ const MESH_TURN_SPEED: float = 12.0
 ## Share of the move speed left when a stamina class has run out of stamina.
 const EXHAUSTED_SPEED_SCALE: float = 0.55
 
+## How long after a flinch the hero cannot be staggered again, in seconds.
+const STAGGER_COOLDOWN: float = 1.2
+
 ## Where a shot leaves from when the hero has nothing in their hand.
 const DEFAULT_MUZZLE_HEIGHT: float = 1.4
 
@@ -67,6 +70,7 @@ var camera_yaw: float = 0.0
 
 var _is_stagger_pending: bool = false
 var _is_block_hit_pending: bool = false
+var _stagger_cooldown_left: float = 0.0
 var _regen_delay_left: float = 0.0
 var _regen_carry: float = 0.0
 var _regen_boost: float = 1.0
@@ -154,7 +158,10 @@ func _exit_tree() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 
-	# Counted here and not in a state, so the refill runs whatever the hero is doing.
+	# Counted here and not in a state, so both run whatever the hero is doing.
+	if _stagger_cooldown_left > 0.0:
+		_stagger_cooldown_left -= delta
+
 	_advance_regen_boost(delta)
 	_regenerate_resource(delta)
 
@@ -412,11 +419,15 @@ func take_damage(amount: float, from_position: Vector3, is_magic: bool = false) 
 	health_pool.decrease(int(amount * (1.0 - reduction)))
 
 	# A caught hit does not break the guard, which is the point of holding it.
-	if reduction <= 0.0:
-		_is_stagger_pending = true
+	if reduction > 0.0:
+		_is_block_hit_pending = true
 		return
 
-	_is_block_hit_pending = true
+	# Still shaken from the last flinch, so this hit only costs health. Without this
+	# a group lands hits faster than the flinch lasts and the hero never moves again.
+	if _stagger_cooldown_left > 0.0: return
+
+	_is_stagger_pending = true
 
 
 ## The state the last hit forces on the hero, cleared on read so it fires once.
@@ -428,6 +439,8 @@ func consume_interrupt_state() -> State:
 		return null
 
 	_is_stagger_pending = false
+	# Counted from the flinch itself, not from the hit that caused it.
+	_stagger_cooldown_left = STAGGER_COOLDOWN
 	return hurt_state
 
 

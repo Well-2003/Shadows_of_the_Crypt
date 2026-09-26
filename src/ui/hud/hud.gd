@@ -4,9 +4,9 @@ extends CanvasLayer
 
 
 ## Colour of the stamina bar, used when the class spends stamina.
-const STAMINA_COLOR: Color = Color(0.24, 0.62, 0.24)
+const STAMINA_COLOR: Color = Color("3d9e3dff")
 ## Colour of the mana bar, used when the class spends mana.
-const MANA_COLOR: Color = Color(0.2, 0.42, 0.85)
+const MANA_COLOR: Color = Color("852dc4ff")
 
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var xp_bar: ProgressBar = %ExperienceBar

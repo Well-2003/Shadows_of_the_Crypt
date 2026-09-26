@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://bgk8js1cwdalh" path="res://characters/damage_flash/damage_flash.gd" id="9_flash"]
 [ext_resource type="PackedScene" path="res://characters/health_bar_3d/health_bar_3d.tscn" id="10_hbar"]
 
-[sub_resource type="StatPool" id="StatPool_fxr6h"]
+[sub_resource type="StatPool" id="StatPool_0m36c"]
 max_value = 120
 value = 120
 
@@ -26,13 +26,16 @@ value = 120
 radius = 0.5751953
 height = 2.3065186
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_xqg05"]
+viewport_path = NodePath("SubViewport")
+
 [node name="BaseEnemy" type="CharacterBody3D" unique_id=315431870 node_paths=PackedStringArray("initial_state")]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_yri6l")
 villain_data = ExtResource("2_hfic1")
 initial_state = NodePath("StateMachine/InactiveState")
-health_pool = SubResource("StatPool_fxr6h")
+health_pool = SubResource("StatPool_0m36c")
 attack_layer = 16
 attack_mask = 3
 
@@ -55,7 +58,8 @@ libraries/special = ExtResource("7_u3rtr")
 script = ExtResource("9_flash")
 
 [node name="HealthBar3D" parent="." unique_id=930000202 instance=ExtResource("10_hbar")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.598223, 0)
+texture = SubResource("ViewportTexture_xqg05")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1328068798]
 script = ExtResource("2_e1ym0")
