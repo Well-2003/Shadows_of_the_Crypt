@@ -1,18 +1,26 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bjjj600dxl5iv"]
 
 [ext_resource type="PackedScene" uid="uid://buith6qpsfym2" path="res://characters/villains/base_villain/base_enemy.tscn" id="1_base"]
 [ext_resource type="Script" uid="uid://cf3s0c5k3awk" path="res://characters/villains/base_villain/melee_enemy/melee_enemy.gd" id="2_script"]
 [ext_resource type="Script" uid="uid://mm8mtixkricv" path="res://characters/villains/base_villain/melee_enemy/exclusive_states/attack_melee_enemy.gd" id="3_atk"]
 [ext_resource type="Script" uid="uid://bqx1siiq0k7y0" path="res://characters/villains/base_villain/melee_enemy/exclusive_states/block_melee_enemy.gd" id="4_blk"]
-[ext_resource type="Resource" uid="uid://n1da7gjfpgbt" path="res://characters/villains/skel_warrior/warrior.tres" id="5_data"]
 
-[node name="MeleeEnemy" instance=ExtResource("1_base") node_paths=PackedStringArray("initial_state")]
+[sub_resource type="StatPool" id="StatPool_5shqo"]
+max_value = 120
+value = 120
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gffkl"]
+viewport_path = NodePath("SubViewport")
+
+[node name="MeleeEnemy" unique_id=1773154120 instance=ExtResource("1_base")]
 script = ExtResource("2_script")
-villain_data = ExtResource("5_data")
-initial_state = NodePath("StateMachine/InactiveState")
+health_pool = SubResource("StatPool_5shqo")
 
-[node name="AttackState" type="Node" parent="StateMachine"]
+[node name="HealthBar3D" parent="." index="3" unique_id=930000202]
+texture = SubResource("ViewportTexture_gffkl")
+
+[node name="AttackState" type="Node" parent="StateMachine" parent_id_path=PackedInt32Array(1328068798) index="6" unique_id=700524242]
 script = ExtResource("3_atk")
 
-[node name="BlockState" type="Node" parent="StateMachine"]
+[node name="BlockState" type="Node" parent="StateMachine" parent_id_path=PackedInt32Array(1328068798) index="7" unique_id=1179672687]
 script = ExtResource("4_blk")

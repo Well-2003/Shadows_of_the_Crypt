@@ -13,6 +13,7 @@ const MANA_COLOR: Color = Color("852dc4ff")
 @onready var resource_bar: ProgressBar = %ResourceBar
 @onready var ammo_counter: Label = %AmmoCounter
 @onready var level_label: Label = %LevelLabel
+@onready var spell_bar: SpellBar = %SpellBar
 @onready var crosshair: Control = %Crosshair
 @onready var hotbar_row: BoxContainer = %HotbarRow
 
@@ -73,6 +74,16 @@ func set_hotbar(slots: Array[WeaponData], selected_index: int) -> void:
 		var item: WeaponData = slots[index] if index < slots.size() else null
 
 		slot.show_item(item, index == selected_index)
+
+
+## Puts the spell cross on screen, only for a class that casts.
+func setup_spellbook(hero_data: HeroClassData) -> void:
+	spell_bar.visible = hero_data != null and hero_data.uses_spells
+
+
+## Paints the spell cross, calling out the slot the next cast will use.
+func set_spellbook(spells: Array[SpellData], selected: int) -> void:
+	spell_bar.show_spells(spells, selected)
 
 
 ## Shows the crosshair while aiming and hides it the rest of the time.

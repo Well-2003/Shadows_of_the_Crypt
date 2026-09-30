@@ -212,6 +212,11 @@ func get_attack_animation(aiming_up: bool) -> String:
 	return attack_animations.pick_random()
 
 
+## True for the weapons that cast a spell instead of firing a shot of their own.
+func is_magic_weapon() -> bool:
+	return weapon_type == WeaponType.WAND or weapon_type == WeaponType.STAFF
+
+
 ## Tint for this weapon's rarity.
 func get_rarity_color() -> Color:
 	return RARITY_COLORS[rarity]

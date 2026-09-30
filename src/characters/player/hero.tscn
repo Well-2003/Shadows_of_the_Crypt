@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://djqhwy72bpagg" path="res://characters/player/states/death_state.gd" id="18_death"]
 [ext_resource type="Script" uid="uid://bgk8js1cwdalh" path="res://characters/damage_flash/damage_flash.gd" id="19_flash"]
 [ext_resource type="Script" uid="uid://b4pkmtb3tylhc" path="res://characters/player/hotbar/hotbar.gd" id="20_hotbar"]
+[ext_resource type="Script" path="res://characters/player/spellbook/spellbook.gd" id="21_spellbook"]
 
 [sub_resource type="StatPool" id="StatPool_k4003"]
 max_value = 150
@@ -70,6 +71,9 @@ script = ExtResource("19_flash")
 
 [node name="Hotbar" type="Node" parent="." unique_id=930000201]
 script = ExtResource("20_hotbar")
+
+[node name="Spellbook" type="Node" parent="." unique_id=930000203]
+script = ExtResource("21_spellbook")
 
 [node name="StateMachine" type="Node" parent="." unique_id=121810463]
 script = ExtResource("10_rbtco")

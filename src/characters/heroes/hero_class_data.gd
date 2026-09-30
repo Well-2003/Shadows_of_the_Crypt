@@ -57,6 +57,10 @@ enum ResourceType {
 @export_group("Equipment")
 ## Starting gear, index 0 fills hotbar slot 1 and index 1 fills slot 2.
 @export var starting_weapons: Array[WeaponData] = []
+## True for a class that casts, which is what puts the spell cross on screen.
+@export var uses_spells: bool = false
+## Spells the class knows, in the order they fill the four spell slots.
+@export var starting_spells: Array[SpellData] = []
 
 
 ## True when the resource is ammo, which the HUD counts instead of drawing a bar.

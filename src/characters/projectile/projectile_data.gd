@@ -43,3 +43,7 @@ enum DamageType {
 @export var stick_fade_time: float = 4.0
 ## How deep the shot sinks into what it hit, so it never hangs in the air.
 @export var stick_depth: float = 0.12
+## Effect played where the shot lands, left empty for a shot that lands quietly.
+@export var impact_effect: PackedScene = null
+## Patch left burning where the shot landed, empty for a shot that leaves nothing.
+@export var impact_area: SpellData = null

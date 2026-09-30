@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://dyonl2uclwils" path="res://characters/projectile/spells/spell_area/spell_area.gd" id="1_script"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_patch"]
+resource_local_to_scene = true
+height = 3.0
+radius = 2.5
+
+[node name="SpellArea" type="Area3D"]
+script = ExtResource("1_script")
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("CylinderShape3D_patch")

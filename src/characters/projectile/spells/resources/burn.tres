@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://db3fi12ynp7gu"]
+
+[ext_resource type="Script" uid="uid://30ctujp6lnbs" path="res://characters/projectile/spells/spell_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bjdo1exfi4ycs" path="res://characters/projectile/magics/dark_magic_fx/effects/area/vfx_evil_area_01.tscn" id="2_effect"]
+[ext_resource type="Texture2D" uid="uid://by7q7lafjkrkq" path="res://characters/projectile/spells/icons/Mana Burst.png" id="2_f8hh3"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Burn"
+icon = ExtResource("2_f8hh3")
+icon_color = Color(1, 0.37254903, 0, 1)
+kind = 1
+mana_cost = 20
+base_damage = 5
+scaling_multiplier = 0.3
+effect = ExtResource("2_effect")
+duration = 6.0

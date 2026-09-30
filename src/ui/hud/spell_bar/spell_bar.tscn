@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://clcpq1p1idiy1"]
+
+[ext_resource type="Script" uid="uid://bnhy4ow6b64oq" path="res://ui/hud/spell_bar/spell_bar.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://ui/hud/spell_bar/spell_slot.tscn" id="2_slot"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kr06c"]
+resource_local_to_scene = true
+bg_color = Color(0.08, 0.08, 0.08, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.35, 0.35, 0.7)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2qiri"]
+resource_local_to_scene = true
+bg_color = Color(0.08, 0.08, 0.08, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.35, 0.35, 0.7)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x1y5a"]
+resource_local_to_scene = true
+bg_color = Color(0.08, 0.08, 0.08, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.35, 0.35, 0.7)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8sdb"]
+resource_local_to_scene = true
+bg_color = Color(0.08, 0.08, 0.08, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.35, 0.35, 0.7)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="SpellBar" type="Control" unique_id=791591350]
+custom_minimum_size = Vector2(248, 248)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 248.0
+offset_bottom = 248.0
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Up" parent="." unique_id=189527580 instance=ExtResource("2_slot")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 88.0
+offset_top = 11.0
+offset_right = 168.0
+offset_bottom = 91.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kr06c")
+
+[node name="Right" parent="." unique_id=496740209 instance=ExtResource("2_slot")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 164.0
+offset_top = 87.0
+offset_right = 244.0
+offset_bottom = 167.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2qiri")
+
+[node name="Down" parent="." unique_id=1410665575 instance=ExtResource("2_slot")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 90.0
+offset_top = 165.0
+offset_right = 170.0
+offset_bottom = 245.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1y5a")
+
+[node name="Left" parent="." unique_id=1925938951 instance=ExtResource("2_slot")]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 89.0
+offset_right = 94.0
+offset_bottom = 169.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8sdb")

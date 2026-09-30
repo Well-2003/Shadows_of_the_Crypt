@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://d24a2kluit1it" path="res://characters/projectile/magics/electric_fx/effects/zap/vfx_zap_lightning_01.tscn" id="1_base"]
+
+[node name="ZapImpact" instance=ExtResource("1_base")]
+one_shot = true
+autoplay = true

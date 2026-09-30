@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3]
+
+[ext_resource type="Script" uid="uid://bar4t0nda1vdo" path="res://characters/projectile/projectile_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://25isgvqwy1cj" path="res://characters/projectile/magics/electric_fx/effects/ball/vfx_ball_lightning_01.tscn" id="2_model"]
+[ext_resource type="PackedScene" path="res://characters/projectile/spells/effects/zap_impact.tscn" id="3_impact"]
+
+[resource]
+script = ExtResource("1_script")
+model = ExtResource("2_model")
+speed = 34.0
+gravity_scale = 0.0
+lifetime = 5.0
+hit_radius = 0.3
+damage_type = 1
+impact_effect = ExtResource("3_impact")

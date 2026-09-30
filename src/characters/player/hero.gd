@@ -81,6 +81,7 @@ var _regen_boost_left: float = 0.0
 @onready var camera_pivot: PlayerCamera = $PlayerCamera
 @onready var damage_flash: DamageFlash = $DamageFlash
 @onready var hotbar: Hotbar = $Hotbar
+@onready var spellbook: Spellbook = $Spellbook
 @onready var hud: HUD = $Hud
 
 #region States
@@ -101,6 +102,7 @@ func _ready() -> void:
 	skeleton = base.get_node_or_null("Skeleton3D")
 	# Connected before the data is applied, or the first fill would reach nobody.
 	hotbar.changed.connect(_on_hotbar_changed)
+	spellbook.changed.connect(_on_spellbook_changed)
 	_set_hero_data(hero_data)
 
 	if Engine.is_editor_hint(): return
@@ -135,7 +137,16 @@ func _sync_hud() -> void:
 
 	hud.set_health(health_pool.get_value(), health_pool.get_max_value())
 	hud.setup_resource(hero_data)
+	hud.setup_spellbook(hero_data)
 	hud.set_resource(resource_pool.get_value(), resource_pool.get_max_value())
+
+
+## Shows the newly selected spell in the HUD.
+func _on_spellbook_changed(all_spells: Array[SpellData], selected: int) -> void:
+	# The HUD script does not run in the editor, so its nodes are not there to touch.
+	if Engine.is_editor_hint(): return
+
+	hud.set_spellbook(all_spells, selected)
 
 
 ## Re-hangs the models whenever the selected slot changes.
@@ -187,6 +198,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("camera_zoom_out"):
 		camera_pivot.apply_zoom(-1.0)
+		return
+
+	if event.is_action_pressed("cycle_spell"):
+		spellbook.cycle()
 		return
 
 	if _handle_hotbar_input(event): return
@@ -246,6 +261,7 @@ func _set_hero_data(value: HeroClassData) -> void:
 
 	# Fills the bar, which then calls back and hangs the models on the new skeleton.
 	hotbar.setup(hero_data)
+	spellbook.setup(hero_data)
 
 	# The class is picked after _ready by GameManager, so the HUD is caught up here
 	# and not only on the way in, or it would keep showing the scene's default class.
@@ -345,9 +361,47 @@ func close_swing() -> void:
 	main_hand_hitbox.close()
 
 
+## True when the hero holds magic and has a spell picked to cast with it.
+func can_cast_spell() -> bool:
+	if not equipped_weapon: return false
+	if not equipped_weapon.is_magic_weapon(): return false
+
+	return spellbook.get_selected() != null
+
+
+## Throws the selected spell, the flying one or the patch that stays burning.
+func cast_spell() -> void:
+	var spell: SpellData = spellbook.get_selected()
+	if not spell: return
+
+	var spell_damage: float = spell.get_damage(int(hero_data.magic_damage))
+
+	if spell.kind == SpellData.Kind.AREA:
+		# Aimed at on the ground: the crosshair often lands on a far wall, and a
+		# patch of fire belongs on the floor the hero is standing on.
+		var spot: Vector3 = camera_pivot.get_aim_point()
+		spot.y = global_position.y + spell.height_offset
+
+		SpellArea.cast(spell, self, spot, spell_damage)
+		return
+
+	if not spell.projectile: return
+
+	var spell_origin: Vector3 = get_muzzle_position()
+	Projectile.spawn(spell.projectile, spell_damage, self, spell_origin,
+		camera_pivot.get_aim_direction(spell_origin))
+
+
 ## Sends the equipped weapon's shot flying at whatever the crosshair covers.
 func fire_shot() -> void:
-	if not equipped_weapon or not equipped_weapon.projectile: return
+	if not equipped_weapon: return
+
+	# A magic weapon throws whichever spell is selected, not a shot of its own.
+	if can_cast_spell():
+		cast_spell()
+		return
+
+	if not equipped_weapon.projectile: return
 
 	var origin: Vector3 = get_muzzle_position()
 	var direction: Vector3 = camera_pivot.get_aim_direction(origin)
@@ -369,6 +423,10 @@ func get_attack_damage() -> float:
 ## What one use of the equipped weapon costs this class.
 func get_attack_cost() -> int:
 	if not equipped_weapon: return 0
+
+	# A magic weapon costs whatever the spell it is about to cast costs.
+	if can_cast_spell():
+		return spellbook.get_selected().mana_cost
 
 	# Ammo is spent by the weapon that fires it, so a backup blade never eats arrows.
 	if hero_data.is_ammo() and not equipped_weapon.projectile: return 0

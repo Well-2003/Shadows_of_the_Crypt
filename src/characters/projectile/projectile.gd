@@ -12,6 +12,9 @@ const SCENE_UID: String = "res://characters/projectile/projectile.tscn"
 ## Downward pull at gravity_scale 1.0, the same the characters fall with.
 const GRAVITY: float = 9.8
 
+## How long the impact effect is left on screen before it is cleared away.
+const IMPACT_EFFECT_TIME: float = 2.0
+
 var data: ProjectileData = null
 var damage: float = 0.0
 var shooter: Node3D = null
@@ -132,6 +135,8 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 
 	_deal_damage(body)
+	_play_impact()
+	_leave_burn()
 
 	# An arrow stays planted in whatever it hit, an orb has nothing to plant.
 	if not data.sticks_on_hit:
@@ -139,6 +144,34 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 
 	_stick_into(body)
+
+
+## Puts the landing effect where the shot hit, and clears it away on its own.
+func _play_impact() -> void:
+	if not data.impact_effect: return
+
+	var effect: Node3D = data.impact_effect.instantiate()
+	# Added to the level, so it outlives the shot that made it.
+	get_parent().add_child(effect)
+	effect.global_position = global_position
+
+	var tween: Tween = effect.create_tween()
+	tween.tween_interval(IMPACT_EFFECT_TIME)
+	tween.tween_callback(effect.queue_free)
+
+
+## Drops the patch that keeps burning where the shot landed, if it leaves one.
+func _leave_burn() -> void:
+	if not data.impact_area: return
+
+	# Put on the floor and not where the shot stopped, or a hit on a wall or on
+	# a chest would leave the flames burning up in the air.
+	var spot: Vector3 = global_position
+	spot.y = shooter.global_position.y + data.impact_area.height_offset
+
+	# The base damage on its own, since the patch is only a leftover of the hit
+	# and never the cast the hero paid mana for.
+	SpellArea.cast(data.impact_area, shooter, spot, data.impact_area.base_damage)
 
 
 ## Plants the shot where it landed, instead of clearing it away.
