@@ -112,6 +112,8 @@ func _ready() -> void:
 	state_machine.init(self, initial_state)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+	Progression.leveled_up.connect(_on_leveled_up)
+
 	health_pool.value_changed.connect(_on_health_changed)
 	resource_pool.value_changed.connect(_on_resource_changed)
 
@@ -128,6 +130,48 @@ func _on_health_changed(_old_value: int, new_value: int, increased: bool) -> voi
 
 func _on_resource_changed(_old_value: int, new_value: int, _increased: bool) -> void:
 	hud.set_resource(new_value, resource_pool.get_max_value())
+
+
+## Grows the hero on every level gained, in the pools and in the damage.
+func _on_leveled_up(new_level: int) -> void:
+	_grow_pool(health_pool, int(hero_data.get_max_health(new_level)))
+	_grow_pool(resource_pool, int(hero_data.get_resource_max(new_level)))
+
+	_sync_hud()
+	_print_attributes(new_level)
+
+
+## Prints what the hero is worth now, for reading the balance while playing.
+func _print_attributes(new_level: int) -> void:
+	print("--- Level ", new_level, "  ", HeroClassData.HeroId.keys()[hero_data.id])
+	print("    health  ", health_pool.get_value(), " / ", health_pool.get_max_value())
+	print("    ", hero_data.get_resource_name(), "  ", resource_pool.get_value(),
+		" / ", resource_pool.get_max_value())
+	print("    melee   ", int(hero_data.get_melee_damage(new_level)))
+	print("    ranged  ", int(hero_data.get_ranged_damage(new_level)))
+	print("    magic   ", int(hero_data.get_magic_damage(new_level)))
+
+	if not equipped_weapon: return
+
+	print("    ", equipped_weapon.get_display_name(), " hits for ", get_attack_damage())
+
+
+## Raises one pool's ceiling and hands the hero what was added.
+func _grow_pool(pool: StatPool, new_max: int) -> void:
+	var gain: int = new_max - pool.get_max_value()
+	if gain <= 0: return
+
+	pool.set_max_value(new_max)
+	# Handed over as a refill too, or a level would only stretch the bar thinner.
+	pool.increase(gain)
+
+
+## The level the pools and the damage are figured at, one while in the editor.
+func _current_level() -> int:
+	# Autoloads do not run in the editor, so Progression is not there to ask.
+	if Engine.is_editor_hint(): return 1
+
+	return Progression.level
 
 
 ## Writes the class's numbers into the HUD, bar or counter picked to match it.
@@ -238,11 +282,14 @@ func _set_hero_data(value: HeroClassData) -> void:
 
 	if not is_node_ready(): return
 
-	health_pool.set_max_value(int(value.max_health))
-	health_pool.increase(int(value.max_health))
+	# Read at the run's current level, so a class swap mid run keeps the progress.
+	var level: int = _current_level()
 
-	resource_pool.set_max_value(int(value.resource_max))
-	resource_pool.increase(int(value.resource_max))
+	health_pool.set_max_value(int(value.get_max_health(level)))
+	health_pool.increase(int(value.get_max_health(level)))
+
+	resource_pool.set_max_value(int(value.get_resource_max(level)))
+	resource_pool.increase(int(value.get_resource_max(level)))
 
 	var mesh_scene: PackedScene = load(MESHES[hero_data.id])
 	var mesh: Skeleton3D = mesh_scene.instantiate()
@@ -374,7 +421,7 @@ func cast_spell() -> void:
 	var spell: SpellData = spellbook.get_selected()
 	if not spell: return
 
-	var spell_damage: float = spell.get_damage(int(hero_data.magic_damage))
+	var spell_damage: float = spell.get_damage(int(hero_data.get_magic_damage(_current_level())))
 
 	if spell.kind == SpellData.Kind.AREA:
 		# Aimed at on the ground: the crosshair often lands on a far wall, and a
@@ -414,10 +461,12 @@ func get_attack_damage() -> float:
 	if not equipped_weapon: return 0.0
 
 	# The class attributes line up with the weapon's Scaling: melee, ranged, magic.
+	var level: int = _current_level()
+
 	return equipped_weapon.get_damage(
-		int(hero_data.physical_damage_melee),
-		int(hero_data.physical_damage_ranged),
-		int(hero_data.magic_damage))
+		int(hero_data.get_melee_damage(level)),
+		int(hero_data.get_ranged_damage(level)),
+		int(hero_data.get_magic_damage(level)))
 
 
 ## What one use of the equipped weapon costs this class.
@@ -430,6 +479,9 @@ func get_attack_cost() -> int:
 
 	# Ammo is spent by the weapon that fires it, so a backup blade never eats arrows.
 	if hero_data.is_ammo() and not equipped_weapon.projectile: return 0
+
+	# Mana is spent by magic, so the mage's dagger never eats the pool either.
+	if hero_data.is_mana() and not equipped_weapon.is_magic_weapon(): return 0
 
 	return equipped_weapon.resource_cost
 
