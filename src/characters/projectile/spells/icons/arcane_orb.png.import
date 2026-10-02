@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dg84aavke3kak"
-path="res://.godot/imported/Lightning Bolt.png-cbc886d92398c6ae026e8d97bb2b15a1.ctex"
+uid="uid://cs6sk8ucgrag2"
+path="res://.godot/imported/arcane_orb.png-96d2bd1df9a70bd6bc46bad4e2f27276.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/projectile/spells/icons/Lightning Bolt.png"
-dest_files=["res://.godot/imported/Lightning Bolt.png-cbc886d92398c6ae026e8d97bb2b15a1.ctex"]
+source_file="res://characters/projectile/spells/icons/arcane_orb.png"
+dest_files=["res://.godot/imported/arcane_orb.png-96d2bd1df9a70bd6bc46bad4e2f27276.ctex"]
 
 [params]
 

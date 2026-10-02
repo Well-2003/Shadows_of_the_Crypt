@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ce0or7wmv713k"]
 
-[ext_resource type="Texture2D" uid="uid://b3ju0albxehbv" path="res://characters/projectile/spells/icons/Arcane Orb.png" id="1_hm1yj"]
+[ext_resource type="Texture2D" uid="uid://pqtxw50uaypk" path="res://characters/projectile/spells/icons/arcane_orb.png" id="1_hm1yj"]
 [ext_resource type="Script" uid="uid://30ctujp6lnbs" path="res://characters/projectile/spells/spell_data.gd" id="1_script"]
 [ext_resource type="Resource" uid="uid://km3okjvalntl" path="res://characters/projectile/resources/arcane_orb.tres" id="2_proj"]
 
@@ -8,7 +8,6 @@
 script = ExtResource("1_script")
 display_name = "Arcane Orb"
 icon = ExtResource("1_hm1yj")
-icon_color = Color(7.6046585e-06, 0.58043945, 0.8103214, 1)
 base_damage = 14
 scaling_multiplier = 1.3
 projectile = ExtResource("2_proj")

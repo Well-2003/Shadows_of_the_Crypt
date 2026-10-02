@@ -82,15 +82,10 @@ func reset() -> void:
 func _load_curve() -> void:
 	_curve.clear()
 
-	if not FileAccess.file_exists(LEVELS_PATH):
-		push_error("Progression: level curve not found at " + LEVELS_PATH)
-		return
+	# Tools answers an empty dictionary on a missing or broken file, never null.
+	var parsed: Dictionary = Tools.load_json_file(LEVELS_PATH)
 
-	var text: String = FileAccess.get_file_as_string(LEVELS_PATH)
-	var parsed: Variant = JSON.parse_string(text)
-
-	# parse_string answers null on bad JSON instead of raising, so it is checked here.
-	if not parsed is Dictionary or not parsed.has("levels"):
+	if not parsed.has("levels"):
 		push_error("Progression: level curve is not a JSON object with a levels list")
 		return
 

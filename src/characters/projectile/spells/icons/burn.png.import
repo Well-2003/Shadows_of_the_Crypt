@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://by7q7lafjkrkq"
-path="res://.godot/imported/Mana Burst.png-0469885d288f0bdb9f7b4bcd287d88d3.ctex"
+uid="uid://dqwp0j1ev1b1e"
+path="res://.godot/imported/burn.png-19773353af1a64bfc5b264a756d3fa05.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/projectile/spells/icons/Mana Burst.png"
-dest_files=["res://.godot/imported/Mana Burst.png-0469885d288f0bdb9f7b4bcd287d88d3.ctex"]
+source_file="res://characters/projectile/spells/icons/burn.png"
+dest_files=["res://.godot/imported/burn.png-19773353af1a64bfc5b264a756d3fa05.ctex"]
 
 [params]
 

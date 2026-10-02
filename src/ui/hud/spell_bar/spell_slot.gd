@@ -24,8 +24,6 @@ func show_spell(spell: SpellData, is_selected: bool) -> void:
 
 	if spell and spell.icon:
 		icon.texture = spell.icon
-		# The tint is what puts one drawing in each spell's own colour.
-		icon.modulate = spell.icon_color
 
 	if is_selected:
 		_apply_border(PICKED_BORDER, PICKED_WIDTH)

@@ -19,8 +19,6 @@ enum Kind {
 @export var display_name: String = ""
 ## Icon shown in the spell bar, empty for a spell with no art yet.
 @export var icon: Texture2D = null
-## Tint laid over that icon, so one drawing serves a spell in its own colour.
-@export var icon_color: Color = Color.WHITE
 ## What the spell does when it is cast.
 @export var kind: Kind = Kind.PROJECTILE
 ## Mana spent per cast.

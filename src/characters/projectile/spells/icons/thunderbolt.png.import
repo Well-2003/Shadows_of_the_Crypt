@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3ju0albxehbv"
-path="res://.godot/imported/Arcane Orb.png-1a008cd80f9fa9447c638bbbafe3fdf0.ctex"
+uid="uid://dmmdtem60cyeo"
+path="res://.godot/imported/thunderbolt.png-bf41acd9651b96ed6b1e050726bfbacd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/projectile/spells/icons/Arcane Orb.png"
-dest_files=["res://.godot/imported/Arcane Orb.png-1a008cd80f9fa9447c638bbbafe3fdf0.ctex"]
+source_file="res://characters/projectile/spells/icons/thunderbolt.png"
+dest_files=["res://.godot/imported/thunderbolt.png-bf41acd9651b96ed6b1e050726bfbacd.ctex"]
 
 [params]
 
