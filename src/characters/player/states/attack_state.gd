@@ -6,20 +6,30 @@ extends State
 ## movement. Which animation plays and how fast comes from the equipped weapon.
 
 
+## Fraction of the wind-up before hitbox activation, 
+## timed early to cover different attack animations (e.g., stabs vs. chops).
+const LIVE_AFTER_RATIO: float = 0.25
+
 var hero: Hero = null
 
-var _time_until_impact: float = 0.0
-var _has_landed: bool = false
+var _impact_time: float = 0.0
+var _elapsed: float = 0.0
+var _is_live: bool = false
+var _has_fired: bool = false
 var _is_finished: bool = false
 
 
 ## Picks one of the weapon attack animations and starts the swing.
 func enter() -> void:
 	hero = context
-	_has_landed = false
+	_elapsed = 0.0
+	_is_live = false
+	_has_fired = false
 	_is_finished = false
 
 	var weapon: WeaponData = hero.equipped_weapon
+	# Paid on the way in, so a swing that gets interrupted still costs the player.
+	hero.spend_attack_cost()
 	# Picked here and not mid swing, so the hero commits to the pose they aimed with.
 	var animation_name: String = ""
 	if weapon:
@@ -32,7 +42,7 @@ func enter() -> void:
 
 	hero.play_animation(animation_name, false, 0.1, weapon.attack_speed)
 
-	_time_until_impact = _impact_time(animation_name, weapon)
+	_impact_time = _time_to_impact(animation_name, weapon)
 
 	# CONNECT_ONE_SHOT drops itself, so an old swing never ends a later one.
 	hero.animation_player.animation_finished.connect(_on_animation_finished, CONNECT_ONE_SHOT)
@@ -40,6 +50,9 @@ func enter() -> void:
 
 ## Drops the connection when the swing is cut short, so the next one is free.
 func exit() -> void:
+	# A swing cut short would otherwise leave the blade live for the rest of the fight.
+	hero.close_swing()
+
 	var finished: Signal = hero.animation_player.animation_finished
 	if finished.is_connected(_on_animation_finished):
 		finished.disconnect(_on_animation_finished)
@@ -68,7 +81,7 @@ func physics_update() -> State:
 
 
 ## How long into the swing the blow should land, in seconds.
-func _impact_time(animation_name: String, weapon: WeaponData) -> float:
+func _time_to_impact(animation_name: String, weapon: WeaponData) -> float:
 	var length: float = 0.0
 	if hero.animation_player.has_animation(animation_name):
 		length = hero.animation_player.get_animation(animation_name).length
@@ -77,24 +90,26 @@ func _impact_time(animation_name: String, weapon: WeaponData) -> float:
 	return (length * weapon.impact_ratio) / weapon.attack_speed
 
 
-## Counts the swing down and resolves the attack at the end of it.
+## Runs the swing's clock: the blade goes live, then shuts again.
 func _advance_swing(delta: float) -> void:
-	if _has_landed: return
+	_elapsed += delta
 
-	_time_until_impact -= delta
-	if _time_until_impact > 0.0: return
+	var weapon: WeaponData = hero.equipped_weapon
 
-	_has_landed = true
-	_resolve_attack()
-
-
-## Fires the shot for a ranged weapon, or reaches whatever a melee one covers.
-func _resolve_attack() -> void:
-	if hero.equipped_weapon.projectile:
-		hero.fire_shot()
+	# A weapon that fires has no blade to open, only a single moment to release.
+	if weapon.projectile:
+		if not _has_fired and _elapsed >= _impact_time:
+			_has_fired = true
+			hero.fire_shot()
 		return
 
-	hero.hit_enemies_in_swing()
+	if not _is_live and _elapsed >= _impact_time * LIVE_AFTER_RATIO:
+		_is_live = true
+		hero.open_swing()
+
+	if _is_live and _elapsed >= _impact_time + weapon.hitbox_window:
+		_is_live = false
+		hero.close_swing()
 
 
 func _on_animation_finished(_animation_name: StringName) -> void:

@@ -35,3 +35,15 @@ enum DamageType {
 @export_group("Impact")
 ## Which resistance the target applies to this hit.
 @export var damage_type: DamageType = DamageType.PHYSICAL
+## True for a shot that stays planted where it landed, like an arrow or a bolt.
+@export var sticks_on_hit: bool = false
+## How long it stays planted before it starts to go, in seconds.
+@export var stick_linger_time: float = 8.0
+## How long it takes to fade from solid to gone.
+@export var stick_fade_time: float = 4.0
+## How deep the shot sinks into what it hit, so it never hangs in the air.
+@export var stick_depth: float = 0.12
+## Effect played where the shot lands, left empty for a shot that lands quietly.
+@export var impact_effect: PackedScene = null
+## Patch left burning where the shot landed, empty for a shot that leaves nothing.
+@export var impact_area: SpellData = null

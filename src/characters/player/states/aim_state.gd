@@ -38,7 +38,7 @@ func physics_update() -> State:
 	if not Input.is_action_pressed("aim"):
 		return hero.idle_state
 
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and hero.can_afford_attack():
 		return hero.attack_state
 
 	_update_aim_pose()

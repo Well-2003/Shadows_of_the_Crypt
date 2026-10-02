@@ -44,7 +44,7 @@ func physics_update() -> State:
 	if Input.is_action_just_pressed("jump") and hero.is_on_floor():
 		return hero.jump_state
 
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and hero.can_afford_attack():
 		return hero.attack_state
 
 	if Input.is_action_pressed("aim"):
@@ -57,14 +57,14 @@ func physics_update() -> State:
 	var delta: float = get_physics_process_delta_time()
 	hero.move_relative_to_camera(input_dir, 1.0, delta)
 
-	var target_angle: float = hero.camera_yaw + deg_to_rad(_turn_angle_for(input_dir))
+	var target_angle: float = hero.camera_yaw + deg_to_rad(turn_angle_for(input_dir))
 	hero.face_mesh_direction(target_angle, delta)
 
 	return null
 
 
 ## Returns, in degrees, which way the character should turn based on the keys held down.
-func _turn_angle_for(input_dir: Vector2) -> float:
+func turn_angle_for(input_dir: Vector2) -> float:
 	var pressing_forward: bool = input_dir.y < 0.0
 	var pressing_backward: bool = input_dir.y > 0.0
 	var pressing_right: bool = input_dir.x > 0.0

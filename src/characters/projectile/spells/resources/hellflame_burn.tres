@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://du8mnni2adjda"]
+
+[ext_resource type="Script" uid="uid://30ctujp6lnbs" path="res://characters/projectile/spells/spell_data.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bjdo1exfi4ycs" path="res://characters/projectile/magics/dark_magic_fx/effects/area/vfx_evil_area_01.tscn" id="2_effect"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0x4wl"]
+load_path = "res://.godot/imported/burn.png-19773353af1a64bfc5b264a756d3fa05.ctex"
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Hellflame Burn"
+icon = SubResource("CompressedTexture2D_0x4wl")
+kind = 1
+mana_cost = 0
+base_damage = 3
+scaling_multiplier = 0.0
+effect = ExtResource("2_effect")
+effect_scale = 0.5
+radius = 1.4
+duration = 3.0
+damage_interval = 0.5

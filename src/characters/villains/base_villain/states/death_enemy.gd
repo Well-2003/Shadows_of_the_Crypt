@@ -28,6 +28,11 @@ func enter() -> void:
 
 	# A blink still running would keep writing colours over the fade below.
 	enemy.damage_flash.stop()
+	# An empty bar over a corpse says nothing, and it would outlive the body.
+	enemy.health_bar.hide_bar()
+	# Dropped rather than just closed: the corpse fade shrinks the weapon model to
+	# nothing, and a physics area scaled to zero has no valid shape to sit in.
+	enemy.discard_hitbox()
 
 	Signals.enemy_died.emit(enemy.villain_data)
 

@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://dkx57nmrgro2"]
 
 [ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_ykmv5"]
+[ext_resource type="Script" uid="uid://30ctujp6lnbs" path="res://characters/projectile/spells/spell_data.gd" id="2_fknog"]
 [ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="2_weapon"]
 [ext_resource type="Resource" uid="uid://dlm0pb4v2qcl4" path="res://characters/heroes/weapons/resources/melee/axe_1handed.tres" id="3_axe"]
 
@@ -11,5 +12,11 @@ max_health = 135.0
 move_speed = 5.2
 physical_damage_melee = 25.0
 resource_max = 80.0
+resource_regen_per_second = 4.0
 starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_axe")])
+health_per_level = 12.0
+melee_damage_per_level = 2.0
+ranged_damage_per_level = 0.0
+magic_damage_per_level = 0.0
+resource_per_level = 6.0
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

@@ -44,8 +44,11 @@ func physics_update() -> State:
 	var input_dir: Vector2 = Input.get_vector("left", "right", "up", "down")
 	hero.move_relative_to_camera(input_dir, AIR_CONTROL, delta)
 
-	# Turns with the mouse mid air, instead of the camera swinging around a still hero.
-	hero.face_mesh_direction(hero.camera_yaw, delta)
+	# Faces the keys being held, the same way the walk state does, or jumping while
+	# backing away would spin the model to the front and back again on landing.
+	var walk: PlayerWalkState = hero.walk_state
+	var target_angle: float = hero.camera_yaw + deg_to_rad(walk.turn_angle_for(input_dir))
+	hero.face_mesh_direction(target_angle, delta)
 
 	if hero.velocity.y < 0.0:
 		_is_falling = true

@@ -19,6 +19,7 @@ scaling_multiplier = 1.6
 world_model = ExtResource("2_model")
 grip_position = Vector3(0.09, 0.067, 0.031)
 grip_rotation = Vector3(-0.02, 90, -1.2)
+icon_rotation = Vector3(0, 0, 45)
 attack_animations = Array[String](["combat_ranged/Ranged_2H_Shoot"])
 idle_animation = "combat_ranged/Ranged_2H_Aiming"
 shop_price = 95

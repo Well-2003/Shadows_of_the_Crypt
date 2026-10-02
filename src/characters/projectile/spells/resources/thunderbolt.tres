@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bt7vyxsinkrsa"]
+
+[ext_resource type="Script" uid="uid://30ctujp6lnbs" path="res://characters/projectile/spells/spell_data.gd" id="1_script"]
+[ext_resource type="Resource" path="res://characters/projectile/resources/lightning_bolt.tres" id="2_proj"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kxcy2"]
+load_path = "res://.godot/imported/thunderbolt.png-bf41acd9651b96ed6b1e050726bfbacd.ctex"
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Thunderbolt"
+icon = SubResource("CompressedTexture2D_kxcy2")
+mana_cost = 10
+base_damage = 30
+projectile = ExtResource("2_proj")

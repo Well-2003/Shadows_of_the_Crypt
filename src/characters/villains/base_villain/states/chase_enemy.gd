@@ -54,7 +54,7 @@ func physics_update() -> State:
 func _decide_in_range(player: Hero, delta: float) -> State:
 	var attack: State = enemy.get_attack_state()
 
-	if attack and enemy.is_attack_ready():
+	if attack and enemy.is_attack_ready() and enemy.can_take_attack_turn():
 		return attack
 
 	var waiting: State = enemy.get_waiting_state()

@@ -21,6 +21,9 @@ func select_hero(hero_data: HeroClassData) -> void:
 
 ## Switches to the gameplay scene, which then calls start_game once it's ready.
 func load_gameplay_scene() -> void:
+	# A run starts at level one, since the progress belongs to the run and not the save.
+	Progression.reset()
+
 	get_tree().change_scene_to_file(GAMEPLAY_SCENE)
 
 
