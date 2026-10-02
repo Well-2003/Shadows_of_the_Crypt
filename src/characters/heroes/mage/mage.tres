@@ -5,10 +5,10 @@
 [ext_resource type="Resource" uid="uid://bsoftodtxivkd" path="res://characters/heroes/weapons/resources/magic/wand.tres" id="3_wand"]
 [ext_resource type="Resource" uid="uid://cm5ipljpb1pxe" path="res://characters/heroes/weapons/resources/melee/dagger_iron.tres" id="4_dagger"]
 [ext_resource type="Script" uid="uid://30ctujp6lnbs" path="res://characters/projectile/spells/spell_data.gd" id="5_spell"]
-[ext_resource type="Resource" path="res://characters/projectile/spells/resources/arcane_orb.tres" id="6_orb"]
-[ext_resource type="Resource" path="res://characters/projectile/spells/resources/burn.tres" id="7_burn"]
+[ext_resource type="Resource" uid="uid://ce0or7wmv713k" path="res://characters/projectile/spells/resources/arcane_orb.tres" id="6_orb"]
+[ext_resource type="Resource" uid="uid://db3fi12ynp7gu" path="res://characters/projectile/spells/resources/burn.tres" id="7_burn"]
 [ext_resource type="Resource" uid="uid://bpvunwhx4pwng" path="res://characters/projectile/spells/resources/hellflame.tres" id="8_hell"]
-[ext_resource type="Resource" path="res://characters/projectile/spells/resources/thunderbolt.tres" id="9_bolt"]
+[ext_resource type="Resource" uid="uid://bt7vyxsinkrsa" path="res://characters/projectile/spells/resources/thunderbolt.tres" id="9_bolt"]
 
 [resource]
 script = ExtResource("1_4m84d")
@@ -20,12 +20,12 @@ physical_damage_melee = 6.0
 magic_damage = 28.0
 resource_type = 1
 resource_regen_per_second = 2.5
+starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_wand"), ExtResource("4_dagger")])
 uses_spells = true
+starting_spells = Array[ExtResource("5_spell")]([ExtResource("6_orb"), ExtResource("7_burn"), ExtResource("8_hell"), ExtResource("9_bolt")])
 health_per_level = 5.0
 melee_damage_per_level = 0.4
 ranged_damage_per_level = 0.0
 magic_damage_per_level = 2.5
 resource_per_level = 8.0
-starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_wand"), ExtResource("4_dagger")])
-starting_spells = Array[ExtResource("5_spell")]([ExtResource("6_orb"), ExtResource("7_burn"), ExtResource("8_hell"), ExtResource("9_bolt")])
 metadata/_custom_type_script = "uid://ks4abisoxr7j"

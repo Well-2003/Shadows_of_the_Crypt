@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="HeroClassData" format=3 uid="uid://rwh4gesw65sn"]
 
 [ext_resource type="Script" uid="uid://ks4abisoxr7j" path="res://characters/heroes/hero_class_data.gd" id="1_irecg"]
+[ext_resource type="Script" uid="uid://30ctujp6lnbs" path="res://characters/projectile/spells/spell_data.gd" id="2_alswx"]
 [ext_resource type="Script" uid="uid://b6i5xpx4m0os2" path="res://characters/heroes/weapons/weapon_data.gd" id="2_weapon"]
 [ext_resource type="Resource" uid="uid://c1esfpik5drb1" path="res://characters/heroes/weapons/resources/melee/sword_1handed.tres" id="3_sword"]
 [ext_resource type="Resource" uid="uid://j4nr6spt5oq6" path="res://characters/heroes/weapons/resources/shields/shield_wooden_buckler.tres" id="4_shield"]
@@ -13,10 +14,10 @@ max_health = 150.0
 move_speed = 4.5
 physical_damage_melee = 18.0
 resource_regen_per_second = 3.5
+starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_sword"), ExtResource("4_shield")])
 health_per_level = 14.0
 melee_damage_per_level = 1.6
 ranged_damage_per_level = 0.0
 magic_damage_per_level = 0.0
 resource_per_level = 6.0
-starting_weapons = Array[ExtResource("2_weapon")]([ExtResource("3_sword"), ExtResource("4_shield")])
 metadata/_custom_type_script = "uid://ks4abisoxr7j"
